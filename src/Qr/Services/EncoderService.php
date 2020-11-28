@@ -56,7 +56,7 @@ class EncoderService
         $barCoreEntity1 = new BarCodeEntity();
         $resultEncoder = $this->classEncoder->encodersToClasses($this->entityEncoders);
         $encoded = $resultEncoder->encode($data);
-        $encodedParts = str_split($encoded, $entityWrapper->blockLeght());
+        $encodedParts = str_split($encoded, $entityWrapper->getBlockSize());
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
             $entityEncoder = $this->classEncoder->encodersToClasses($barCoreEntity1->getEntityEncoders());

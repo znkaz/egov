@@ -8,8 +8,16 @@ use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 class JsonWrapper implements WrapperInterface
 {
 
-    public function blockLeght(): int {
-        return 811;
+    private $blockSize = 811;
+
+    public function getBlockSize(): int
+    {
+        return $this->blockSize;
+    }
+
+    public function setBlockSize(int $size)
+    {
+        $this->blockSize = $size;
     }
 
     public function isMatch(string $encodedData): bool
