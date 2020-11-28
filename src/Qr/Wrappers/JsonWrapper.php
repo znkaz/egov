@@ -10,7 +10,7 @@ class JsonWrapper implements WrapperInterface
 
     private $blockSize = 800;
     private $encoders = [
-        'base64'
+//        'base64'
     ];
 
     public function getBlockSize(): int

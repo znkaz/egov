@@ -15,6 +15,9 @@ use ZnCrypt\Base\Domain\Libs\Encoders\Base64Encoder;
 use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
+use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
+use ZnKaz\Egov\Qr\Encoders\GZipEncoder;
+use ZnKaz\Egov\Qr\Encoders\HexEncoder;
 use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
 use ZnKaz\Egov\Qr\Encoders\SplitEncoder;
@@ -37,16 +40,22 @@ class EncoderService
         JsonWrapper::class,
         XmlWrapper::class,
     ];
-    private $resultEncoders = [
-        'zip',
-    ];
+    private $resultEncoders = [];
 
-    public function __construct(WrapperInterface $defaultEntityWrapper)
+    public function __construct(WrapperInterface $defaultEntityWrapper, array $resultEncoders = [])
     {
+        // todo: сделать экономный выбор компрессии
         $classEncoder = new ClassEncoder([
+            'ecoCompress' => new EconomicCompressionEncoder([
+                GZipEncoder::class,
+                ZipEncoder::class,
+            ]),
             'zip' => ZipEncoder::class,
+            'gzip' => GZipEncoder::class,
             'base64' => Base64Encoder::class,
+            'hex' => HexEncoder::class,
         ]);
+        $this->resultEncoders = $resultEncoders;
         $this->classEncoder = $classEncoder;
         $this->entityWrapper = $defaultEntityWrapper;
     }
