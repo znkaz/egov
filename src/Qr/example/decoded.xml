@@ -1,0 +1,47 @@
+<data><messageId>b7d6f13e-7ee5-4768-90e4-c916c109de10</messageId><messageDate>2019-09-12T13:42:57.566+06:00</messageDate><requestId>10100355031987</requestId><sender><code>GBDFL</code><nameRu>ГБД "Физические лица"</nameRu><nameKz>"Жеке түлағалар" МДҚ</nameKz><changeDate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/></sender><receiver><code>PORTAL</code><nameRu>Веб-Портал</nameRu><nameKz>Веб-Портал</nameKz><changeDate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/></receiver><messageResult><code>00000</code><nameRu>Сообщение успешно обработано</nameRu><nameKz>Хабарлама сәтті өңделді</nameKz><changeDate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/></messageResult><person><iin>880521300193</iin><surname>ЯМЩИКОВ</surname><name>ВИТАЛИЙ</name><patronymic>ВИКТОРОВИЧ</patronymic><birthDate>1988-05-21</birthDate><gender><code>1</code><nameRu>Мужской</nameRu><nameKz>Ер</nameKz><changeDate>2008-03-01T13:21:45+06:00</changeDate></gender><citizenship><code>643</code><nameRu>РОССИЯ</nameRu><nameKz>РЕСЕЙ</nameKz><changeDate>2008-03-01T13:21:44+06:00</changeDate></citizenship><birthPlace><country><code>398</code><nameRu>КАЗАХСТАН</nameRu><nameKz>ҚАЗАҚСТАН</nameKz><changeDate>2008-03-01T13:21:44+06:00</changeDate></country><district><code>1919</code><nameRu>ЖАМБЫЛСКАЯ</nameRu><nameKz>ЖАМБЫЛ</nameKz><changeDate>2008-03-01T13:21:45+06:00</changeDate></district><region><code>1919216</code><nameRu>КОРДАЙСКИЙ РАЙОН</nameRu><nameKz>ҚОРДАЙ АУДАНЫ</nameKz><changeDate>2008-03-01T13:21:45+06:00</changeDate></region><city>С.КОРДАЙ</city></birthPlace><regAddress><country><code>398</code><nameRu>КАЗАХСТАН</nameRu><nameKz>ҚАЗАҚСТАН</nameKz><changeDate>2008-03-01T13:21:44+06:00</changeDate></country><district><code>1919</code><nameRu>ЖАМБЫЛСКАЯ</nameRu><nameKz>ЖАМБЫЛ</nameKz><changeDate>2008-03-01T13:21:45+06:00</changeDate></district><region><code>1919216</code><nameRu>КОРДАЙСКИЙ РАЙОН</nameRu><nameKz>ҚОРДАЙ АУДАНЫ</nameKz><changeDate>2008-03-01T13:21:45+06:00</changeDate></region><city>КОРДАЙ</city><street>ЕЛИМАЙ</street><building>109</building><flat>5</flat><beginDate>2014-11-06</beginDate><status><code>1</code><nameRu>Зарегистрирован</nameRu><nameKz>Тіркелді</nameKz><changeDate>2013-11-29T22:36:46+06:00</changeDate></status><invalidity><code>0</code><nameRu>Зарегистрирован</nameRu><nameKz>Тіркелді</nameKz><changeDate>2013-11-29T22:36:46+06:00</changeDate></invalidity></regAddress></person><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#gost34310-gost34311"/>
+<ds:Reference URI="">
+<ds:Transforms>
+<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+<ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+</ds:Transforms>
+<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#gost34311"/>
+<ds:DigestValue>jm4PbxZDhdboro7xkuSv8J6+oxBuovFkmSyLTatvTCA=</ds:DigestValue>
+</ds:Reference>
+</ds:SignedInfo>
+<ds:SignatureValue>
+7NsDaBO5MVa5uBDidlPKa+3hCsvqJ/EqhmPskdp0R6nfiY0BHAgR4R0BFx+fvbc3t+m56qcTSEhr
+KawWbjLuHA==
+</ds:SignatureValue>
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>
+MIIE+zCCBKWgAwIBAgIULQNtO/dzJEngoZLICJg8+VBCy0gwDQYJKoMOAwoBAQECBQAwUzELMAkG
+A1UEBhMCS1oxRDBCBgNVBAMMO9Kw0JvQotCi0KvSmiDQmtCj05jQm9CQ0J3QlNCr0KDQo9Co0Ksg
+0J7QoNCi0JDQm9Cr0pogKEdPU1QpMB4XDTE5MDQwODA2NTU0NloXDTIwMDQwNzA2NTU0NlowggGl
+MTAwLgYDVQQDDCfQkNCi0JDQk9CQ0JfQmNCV0JLQkCDQkdCQ0JrQotCr0JPQo9Cb0KwxHTAbBgNV
+BAQMFNCQ0KLQkNCT0JDQl9CY0JXQktCQMRgwFgYDVQQFEw9JSU42MTA2MjY0MDAyNjUxCzAJBgNV
+BAYTAktaMRwwGgYDVQQHDBPQndCj0KAt0KHQo9Cb0KLQkNCdMRUwEwYDVQQIDAzQkNCh0KLQkNCd
+0JAxgZAwgY0GA1UECgyBhdCT0J7QodCj0JTQkNCg0KHQotCS0JXQndCd0J7QlSDQo9Cn0KDQldCW
+0JTQldCd0JjQlSAi0JzQmNCd0JjQodCi0JXQoNCh0KLQktCeINCu0KHQotCY0KbQmNCYINCg0JXQ
+odCf0KPQkdCb0JjQmtCYINCa0JDQl9CQ0KXQodCi0JDQnSIxGDAWBgNVBAsMD0JJTjk0MDM0MDAw
+MDQyMTEbMBkGA1UEKgwS0KHQkNCf0JDQoNCe0JLQndCQMSwwKgYJKoZIhvcNAQkBFh1TLlNIQUxH
+WU5CQVlFVkFAQURJTEVULkdPVi5LWjBsMCUGCSqDDgMKAQEBATAYBgoqgw4DCgEBAQEBBgoqgw4D
+CgEDAQEAA0MABEA4VnUxxeeQw/aPS6viY68OuPORwC51GsZqFNzhxA4DkGWtaxbZxXEKpYrh5ORw
+E4hspOb5DR6Pc7rU+1s3Uf7To4IB6zCCAecwDgYDVR0PAQH/BAQDAgbAMCgGA1UdJQQhMB8GCCsG
+AQUFBwMEBggqgw4DAwQBAgYJKoMOAwMEAQIFMA8GA1UdIwQIMAaABFtqc+kwHQYDVR0OBBYEFJgW
+nRu27BQCyhpcZZ00+dRQM3cOMF4GA1UdIARXMFUwUwYHKoMOAwMCATBIMCEGCCsGAQUFBwIBFhVo
+dHRwOi8vcGtpLmdvdi5rei9jcHMwIwYIKwYBBQUHAgIwFwwVaHR0cDovL3BraS5nb3Yua3ovY3Bz
+MFgGA1UdHwRRME8wTaBLoEmGImh0dHA6Ly9jcmwucGtpLmdvdi5rei9uY2FfZ29zdC5jcmyGI2h0
+dHA6Ly9jcmwxLnBraS5nb3Yua3ovbmNhX2dvc3QuY3JsMFwGA1UdLgRVMFMwUaBPoE2GJGh0dHA6
+Ly9jcmwucGtpLmdvdi5rei9uY2FfZF9nb3N0LmNybIYlaHR0cDovL2NybDEucGtpLmdvdi5rei9u
+Y2FfZF9nb3N0LmNybDBjBggrBgEFBQcBAQRXMFUwLwYIKwYBBQUHMAKGI2h0dHA6Ly9wa2kuZ292
+Lmt6L2NlcnQvbmNhX2dvc3QuY2VyMCIGCCsGAQUFBzABhhZodHRwOi8vb2NzcC5wa2kuZ292Lmt6
+MA0GCSqDDgMKAQEBAgUAA0EAPGJOSMzBBKrTcBW12XzVAzbSKVw2wNnA4G11gjKs9cQVnzpEBzZL
+NPM/gFNObvlntxGNN0/Ie0xz7/Bgtxi5xQ==
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</ds:Signature></data>

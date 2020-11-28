@@ -1,0 +1,149 @@
+{
+	"data": {
+		"messageId": "b7d6f13e-7ee5-4768-90e4-c916c109de10",
+		"messageDate": "2019-09-12T13:42:57.566+06:00",
+		"requestId": "10100355031987",
+		"sender": {
+			"code": "GBDFL",
+			"nameRu": "ГБД \"Физические лица\"",
+			"nameKz": "\"Жеке түлағалар\" МДҚ",
+			"changeDate": {
+				"@xsi:nil": "true",
+				"#": ""
+			}
+		},
+		"receiver": {
+			"code": "PORTAL",
+			"nameRu": "Веб-Портал",
+			"nameKz": "Веб-Портал",
+			"changeDate": {
+				"@xsi:nil": "true",
+				"#": ""
+			}
+		},
+		"messageResult": {
+			"code": "00000",
+			"nameRu": "Сообщение успешно обработано",
+			"nameKz": "Хабарлама сәтті өңделді",
+			"changeDate": {
+				"@xsi:nil": "true",
+				"#": ""
+			}
+		},
+		"person": {
+			"iin": "880521300193",
+			"surname": "ЯМЩИКОВ",
+			"name": "ВИТАЛИЙ",
+			"patronymic": "ВИКТОРОВИЧ",
+			"birthDate": "1988-05-21",
+			"gender": {
+				"code": "1",
+				"nameRu": "Мужской",
+				"nameKz": "Ер",
+				"changeDate": "2008-03-01T13:21:45+06:00"
+			},
+			"citizenship": {
+				"code": "643",
+				"nameRu": "РОССИЯ",
+				"nameKz": "РЕСЕЙ",
+				"changeDate": "2008-03-01T13:21:44+06:00"
+			},
+			"birthPlace": {
+				"country": {
+					"code": "398",
+					"nameRu": "КАЗАХСТАН",
+					"nameKz": "ҚАЗАҚСТАН",
+					"changeDate": "2008-03-01T13:21:44+06:00"
+				},
+				"district": {
+					"code": "1919",
+					"nameRu": "ЖАМБЫЛСКАЯ",
+					"nameKz": "ЖАМБЫЛ",
+					"changeDate": "2008-03-01T13:21:45+06:00"
+				},
+				"region": {
+					"code": "1919216",
+					"nameRu": "КОРДАЙСКИЙ РАЙОН",
+					"nameKz": "ҚОРДАЙ АУДАНЫ",
+					"changeDate": "2008-03-01T13:21:45+06:00"
+				},
+				"city": "С.КОРДАЙ"
+			},
+			"regAddress": {
+				"country": {
+					"code": "398",
+					"nameRu": "КАЗАХСТАН",
+					"nameKz": "ҚАЗАҚСТАН",
+					"changeDate": "2008-03-01T13:21:44+06:00"
+				},
+				"district": {
+					"code": "1919",
+					"nameRu": "ЖАМБЫЛСКАЯ",
+					"nameKz": "ЖАМБЫЛ",
+					"changeDate": "2008-03-01T13:21:45+06:00"
+				},
+				"region": {
+					"code": "1919216",
+					"nameRu": "КОРДАЙСКИЙ РАЙОН",
+					"nameKz": "ҚОРДАЙ АУДАНЫ",
+					"changeDate": "2008-03-01T13:21:45+06:00"
+				},
+				"city": "КОРДАЙ",
+				"street": "ЕЛИМАЙ",
+				"building": "109",
+				"flat": "5",
+				"beginDate": "2014-11-06",
+				"status": {
+					"code": "1",
+					"nameRu": "Зарегистрирован",
+					"nameKz": "Тіркелді",
+					"changeDate": "2013-11-29T22:36:46+06:00"
+				},
+				"invalidity": {
+					"code": "0",
+					"nameRu": "Зарегистрирован",
+					"nameKz": "Тіркелді",
+					"changeDate": "2013-11-29T22:36:46+06:00"
+				}
+			}
+		},
+		"ds:Signature": {
+			"ds:SignedInfo": {
+				"ds:CanonicalizationMethod": {
+					"@Algorithm": "http://www.w3.org/TR/2001/REC-xml-c14n-20010315",
+					"#": ""
+				},
+				"ds:SignatureMethod": {
+					"@Algorithm": "http://www.w3.org/2001/04/xmldsig-more#gost34310-gost34311",
+					"#": ""
+				},
+				"ds:Reference": {
+					"@URI": "",
+					"ds:Transforms": {
+						"ds:Transform": [
+							{
+								"@Algorithm": "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
+								"#": ""
+							},
+							{
+								"@Algorithm": "http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments",
+								"#": ""
+							}
+						]
+					},
+					"ds:DigestMethod": {
+						"@Algorithm": "http://www.w3.org/2001/04/xmldsig-more#gost34311",
+						"#": ""
+					},
+					"ds:DigestValue": "jm4PbxZDhdboro7xkuSv8J6+oxBuovFkmSyLTatvTCA="
+				}
+			},
+			"ds:SignatureValue": "\n7NsDaBO5MVa5uBDidlPKa+3hCsvqJ/EqhmPskdp0R6nfiY0BHAgR4R0BFx+fvbc3t+m56qcTSEhr\nKawWbjLuHA==\n",
+			"ds:KeyInfo": {
+				"ds:X509Data": {
+					"ds:X509Certificate": "\nMIIE+zCCBKWgAwIBAgIULQNtO/dzJEngoZLICJg8+VBCy0gwDQYJKoMOAwoBAQECBQAwUzELMAkG\nA1UEBhMCS1oxRDBCBgNVBAMMO9Kw0JvQotCi0KvSmiDQmtCj05jQm9CQ0J3QlNCr0KDQo9Co0Ksg\n0J7QoNCi0JDQm9Cr0pogKEdPU1QpMB4XDTE5MDQwODA2NTU0NloXDTIwMDQwNzA2NTU0NlowggGl\nMTAwLgYDVQQDDCfQkNCi0JDQk9CQ0JfQmNCV0JLQkCDQkdCQ0JrQotCr0JPQo9Cb0KwxHTAbBgNV\nBAQMFNCQ0KLQkNCT0JDQl9CY0JXQktCQMRgwFgYDVQQFEw9JSU42MTA2MjY0MDAyNjUxCzAJBgNV\nBAYTAktaMRwwGgYDVQQHDBPQndCj0KAt0KHQo9Cb0KLQkNCdMRUwEwYDVQQIDAzQkNCh0KLQkNCd\n0JAxgZAwgY0GA1UECgyBhdCT0J7QodCj0JTQkNCg0KHQotCS0JXQndCd0J7QlSDQo9Cn0KDQldCW\n0JTQldCd0JjQlSAi0JzQmNCd0JjQodCi0JXQoNCh0KLQktCeINCu0KHQotCY0KbQmNCYINCg0JXQ\nodCf0KPQkdCb0JjQmtCYINCa0JDQl9CQ0KXQodCi0JDQnSIxGDAWBgNVBAsMD0JJTjk0MDM0MDAw\nMDQyMTEbMBkGA1UEKgwS0KHQkNCf0JDQoNCe0JLQndCQMSwwKgYJKoZIhvcNAQkBFh1TLlNIQUxH\nWU5CQVlFVkFAQURJTEVULkdPVi5LWjBsMCUGCSqDDgMKAQEBATAYBgoqgw4DCgEBAQEBBgoqgw4D\nCgEDAQEAA0MABEA4VnUxxeeQw/aPS6viY68OuPORwC51GsZqFNzhxA4DkGWtaxbZxXEKpYrh5ORw\nE4hspOb5DR6Pc7rU+1s3Uf7To4IB6zCCAecwDgYDVR0PAQH/BAQDAgbAMCgGA1UdJQQhMB8GCCsG\nAQUFBwMEBggqgw4DAwQBAgYJKoMOAwMEAQIFMA8GA1UdIwQIMAaABFtqc+kwHQYDVR0OBBYEFJgW\nnRu27BQCyhpcZZ00+dRQM3cOMF4GA1UdIARXMFUwUwYHKoMOAwMCATBIMCEGCCsGAQUFBwIBFhVo\ndHRwOi8vcGtpLmdvdi5rei9jcHMwIwYIKwYBBQUHAgIwFwwVaHR0cDovL3BraS5nb3Yua3ovY3Bz\nMFgGA1UdHwRRME8wTaBLoEmGImh0dHA6Ly9jcmwucGtpLmdvdi5rei9uY2FfZ29zdC5jcmyGI2h0\ndHA6Ly9jcmwxLnBraS5nb3Yua3ovbmNhX2dvc3QuY3JsMFwGA1UdLgRVMFMwUaBPoE2GJGh0dHA6\nLy9jcmwucGtpLmdvdi5rei9uY2FfZF9nb3N0LmNybIYlaHR0cDovL2NybDEucGtpLmdvdi5rei9u\nY2FfZF9nb3N0LmNybDBjBggrBgEFBQcBAQRXMFUwLwYIKwYBBQUHMAKGI2h0dHA6Ly9wa2kuZ292\nLmt6L2NlcnQvbmNhX2dvc3QuY2VyMCIGCCsGAQUFBzABhhZodHRwOi8vb2NzcC5wa2kuZ292Lmt6\nMA0GCSqDDgMKAQEBAgUAA0EAPGJOSMzBBKrTcBW12XzVAzbSKVw2wNnA4G11gjKs9cQVnzpEBzZL\nNPM/gFNObvlntxGNN0/Ie0xz7/Bgtxi5xQ==\n"
+				}
+			}
+		}
+	}
+}
