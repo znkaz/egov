@@ -14,7 +14,6 @@ class XmlWrapper implements WrapperInterface
 
     public function isMatch(string $encodedData): bool
     {
-//        dd($encodedData);
         return preg_match('#<\?xml#i', $encodedData);
     }
 
