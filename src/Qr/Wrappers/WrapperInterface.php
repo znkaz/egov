@@ -11,6 +11,10 @@ interface WrapperInterface
 
     public function setBlockSize(int $size);
 
+    public function getEncoders(): array;
+
+    public function setEncoders(array $encoders): void;
+
     public function isMatch(string $encodedData): bool;
 
     public function encode(BarCodeEntity $entity): string;

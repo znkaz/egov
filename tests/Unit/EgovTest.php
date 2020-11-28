@@ -18,6 +18,7 @@ class EgovTest extends BaseTest
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
         $wrapper = new XmlWrapper();
+        $wrapper->setEncoders(['base64']);
         $encoderService = $this->createService($wrapper);
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
@@ -32,10 +33,13 @@ class EgovTest extends BaseTest
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
         $wrapper = new JsonWrapper();
+        $wrapper->setEncoders(['base64']);
         $encoderService = $this->createService($wrapper);
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
+
+        //dd($encodedCollection);
 
         $this->assertEquals(5, $encodedCollection->count());
         $this->assertEquals($data, $decoded);

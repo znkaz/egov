@@ -7,20 +7,47 @@ use BaconQrCode\Renderer\Image\ImageBackEndInterface;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\PlainTextRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Collection;
+use ZnCore\Base\Helpers\EnumHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnKaz\Egov\Qr\Entities\FileEntity;
+use ZnKaz\Egov\Qr\Enums\ImageExtensionEnum;
 
 class QrService
 {
 
+    private $format;
     private $imageBackEnd;
+    private $size;
+    private $margin;
+    private $render;
 
-    public function __construct(ImageBackEndInterface $imageBackEnd)
+    public function __construct(string $format = 'png', int $margin = 1, int $size = 400, int $compressionQuality = 100)
     {
-        $this->imageBackEnd = $imageBackEnd;
+        EnumHelper::validate(ImageExtensionEnum::class, $format, null, "Image extension \"$format\" not supported!");
+        $this->format = $format;
+        $this->size = $size;
+        $this->margin = $margin;
+        if ($format == ImageExtensionEnum::SVG) {
+            $this->imageBackEnd = new SvgImageBackEnd();
+        } elseif ($format == ImageExtensionEnum::EPS) {
+            $this->imageBackEnd = new EpsImageBackEnd();
+        } elseif ($format == ImageExtensionEnum::TXT) {
+
+        } else {
+            $this->imageBackEnd = new ImagickImageBackEnd($format);
+        }
+        if ($format == ImageExtensionEnum::TXT) {
+            $this->render = new PlainTextRenderer($margin);
+        } else {
+            $this->render = new ImageRenderer(
+                new RendererStyle($size, $margin),
+                $this->imageBackEnd
+            );
+        }
     }
 
     /**
@@ -30,13 +57,9 @@ class QrService
     public function encode(Collection $encoded): Collection
     {
         $collection = new Collection();
+        $writer = new Writer($this->render);
+        $extension = $this->format;
         foreach ($encoded as $i => $data) {
-            $renderer = new ImageRenderer(
-                new RendererStyle(700),
-                $this->imageBackEnd
-            );
-            $writer = new Writer($renderer);
-            $extension = $this->getFileExtensionByImage();
             $fileEntity = $this->forgeFileEntity($extension, $writer->writeString($data));
             $collection->add($fileEntity);
         }
@@ -52,16 +75,5 @@ class QrService
         $fileEntity->setMimeType($mimeType);
         $fileEntity->setContent($content);
         return $fileEntity;
-    }
-
-    public function getFileExtensionByImage()
-    {
-        if ($this->imageBackEnd instanceof SvgImageBackEnd) {
-            return 'svg';
-        } elseif ($this->imageBackEnd instanceof EpsImageBackEnd) {
-            return 'eps';
-        } elseif ($this->imageBackEnd instanceof ImagickImageBackEnd) {
-            return 'png';
-        }
     }
 }

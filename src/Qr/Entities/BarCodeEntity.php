@@ -11,9 +11,7 @@ class BarCodeEntity
     private $maxLenght = 650;
     private $createdAt;
     private $collectionEncoders = [
-//        'xml',
-        'zip',
-//        'implode',
+        //'zip',
     ];
     private $entityEncoders = [
         'base64',
@@ -79,12 +77,12 @@ class BarCodeEntity
         $this->collectionEncoders = $collectionEncoders;
     }
 
-    public function getEntityEncoders()
+    public function getEntityEncoders(): array
     {
         return $this->entityEncoders;
     }
 
-    public function setEntityEncoders($entityEncoders): void
+    public function setEntityEncoders(array $entityEncoders): void
     {
         $this->entityEncoders = $entityEncoders;
     }

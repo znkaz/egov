@@ -9,6 +9,9 @@ class XmlWrapper implements WrapperInterface
 {
 
     private $blockSize = 650;
+    private $encoders = [
+        'base64'
+    ];
 
     public function getBlockSize(): int
     {
@@ -18,6 +21,16 @@ class XmlWrapper implements WrapperInterface
     public function setBlockSize(int $size)
     {
         $this->blockSize = $size;
+    }
+
+    public function getEncoders(): array
+    {
+        return $this->encoders;
+    }
+
+    public function setEncoders(array $encoders): void
+    {
+        $this->encoders = $encoders;
     }
 
     public function isMatch(string $encodedData): bool

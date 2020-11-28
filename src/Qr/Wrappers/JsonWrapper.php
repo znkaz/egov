@@ -8,7 +8,10 @@ use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 class JsonWrapper implements WrapperInterface
 {
 
-    private $blockSize = 811;
+    private $blockSize = 800;
+    private $encoders = [
+        'base64'
+    ];
 
     public function getBlockSize(): int
     {
@@ -18,6 +21,16 @@ class JsonWrapper implements WrapperInterface
     public function setBlockSize(int $size)
     {
         $this->blockSize = $size;
+    }
+
+    public function getEncoders(): array
+    {
+        return $this->encoders;
+    }
+
+    public function setEncoders(array $encoders): void
+    {
+        $this->encoders = $encoders;
     }
 
     public function isMatch(string $encodedData): bool
@@ -31,6 +44,9 @@ class JsonWrapper implements WrapperInterface
         $barCode['id'] = $entity->getId();
         $barCode['count'] = $entity->getCount();
         $barCode['data'] = $entity->getData();
+        if($entity->getEntityEncoders()) {
+            $barCode['enc'] = implode(',', $entity->getEntityEncoders());
+        }
         $barCode['creationDate'] = $entity->getCreatedAt();
         $jsonContent = json_encode($barCode);
         return $jsonContent;
@@ -43,6 +59,11 @@ class JsonWrapper implements WrapperInterface
         $entity->setId($decoded['id']);
         $entity->setCount($decoded['count']);
         $entity->setData($decoded['data']);
+        if(isset($decoded['enc'])) {
+            $entity->setEntityEncoders(explode(',', $decoded['enc']));
+        } else {
+            $entity->setEntityEncoders([]);
+        }
         $entity->setCreatedAt($decoded['creationDate']);
         return $entity;
     }

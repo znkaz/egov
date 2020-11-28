@@ -26,6 +26,7 @@ use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
 use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
 use Zxing\QrReader;
+use Exception;
 
 class EncoderService
 {
@@ -36,7 +37,7 @@ class EncoderService
         JsonWrapper::class,
         XmlWrapper::class,
     ];
-    private $entityEncoders = [
+    private $resultEncoders = [
         'zip',
     ];
 
@@ -54,18 +55,19 @@ class EncoderService
     {
         $entityWrapper = $entityWrapper ?: $this->entityWrapper;
         $barCoreEntity1 = new BarCodeEntity();
-        $resultEncoder = $this->classEncoder->encodersToClasses($this->entityEncoders);
+        $resultEncoder = $this->classEncoder->encodersToClasses($this->resultEncoders);
         $encoded = $resultEncoder->encode($data);
         $encodedParts = str_split($encoded, $entityWrapper->getBlockSize());
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
-            $entityEncoder = $this->classEncoder->encodersToClasses($barCoreEntity1->getEntityEncoders());
+            $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
             $encodedItem = $entityEncoder->encode($item);
             $barCodeEntity = new BarCodeEntity();
             $barCodeEntity->setId($index + 1);
             $barCodeEntity->setData($encodedItem);
             $barCodeEntity->setCount(count($encodedParts));
             $barCodeEntity->setCreatedAt('2020-11-17T20:55:33.671+06:00');
+            $barCodeEntity->setEntityEncoders($entityWrapper->getEncoders());
             $collection->add($entityWrapper->encode($barCodeEntity));
         }
         return $collection;
@@ -82,7 +84,8 @@ class EncoderService
         }
         /** @var BarCodeEntity $firstBarCodeEntity */
         $firstBarCodeEntity = $barCodeCollection->first();
-        $collectionEncoders = $firstBarCodeEntity->getCollectionEncoders();
+//        $collectionEncoders = $firstBarCodeEntity->getCollectionEncoders();
+        $collectionEncoders = $this->resultEncoders;
         $resultEncoder = $this->classEncoder->encodersToClasses($collectionEncoders);
         return $resultEncoder->decode($resultCollection->toArray());
 
@@ -94,6 +97,11 @@ class EncoderService
 
     }
 
+    /**
+     * @param Collection $array
+     * @return Collection | BarCodeEntity[]
+     * @throws Exception
+     */
     private function arrayToCollection(Collection $array): Collection
     {
         $collection = new Collection();
