@@ -1,0 +1,22 @@
+{
+  "name": "znkaz/egov",
+  "type": "extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yamshikov Vitaliy",
+      "email": "theyamshikov@yandex.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "bacon/bacon-qr-code": "dev-master",
+    "pclzip/pclzip": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "ZnKaz\\Egov\\": "src",
+      "ZnKaz\\Egov\\Tests\\": "tests"
+    }
+  }
+}
