@@ -8,9 +8,8 @@ use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 class XmlWrapper implements WrapperInterface
 {
 
-    private $blockSize = 650;
     private $encoders = [
-        'b64'
+        'base64'
     ];
 
     public function getEncoders(): array

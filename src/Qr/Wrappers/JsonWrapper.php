@@ -8,10 +8,7 @@ use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 class JsonWrapper implements WrapperInterface
 {
 
-    private $blockSize = 800;
-    private $encoders = [
-//        'base64'
-    ];
+    private $encoders = [];
 
     public function getEncoders(): array
     {
