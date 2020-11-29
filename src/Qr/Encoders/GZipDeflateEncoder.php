@@ -4,7 +4,7 @@ namespace ZnKaz\Egov\Qr\Encoders;
 
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 
-class GZipEncoder implements EncoderInterface
+class GZipDeflateEncoder implements EncoderInterface
 {
 
     private $encoding;
@@ -18,7 +18,15 @@ class GZipEncoder implements EncoderInterface
 
     public function encode($data)
     {
-        return gzcompress($data, $this->level, $this->encoding);
+        if($this->encoding == ZLIB_ENCODING_GZIP) {
+            return gzencode($data, $this->level);
+        } elseif($this->encoding == ZLIB_ENCODING_DEFLATE) {
+            return gzdeflate($data, $this->level);
+        } elseif($this->encoding == ZLIB_ENCODING_RAW) {
+            return gzcompress($data, $this->level);
+        }
+        //return gzcompress($data, $this->level, ZLIB_ENCODING_GZIP);
+//        return gzencode($data);
     }
 
     public function decode($encodedData)
@@ -28,7 +36,9 @@ class GZipEncoder implements EncoderInterface
         } elseif($this->encoding == ZLIB_ENCODING_DEFLATE) {
             return gzinflate($encodedData);
         } elseif($this->encoding == ZLIB_ENCODING_RAW) {
-            return gzinflate($encodedData);
+            return gzuncompress($encodedData);
         }
+//        return gzuncompress($encodedData);
+
     }
 }

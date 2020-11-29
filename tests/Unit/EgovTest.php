@@ -134,7 +134,7 @@ class EgovTest extends BaseTest
         $this->assertArraySubset([
             "id" => 1,
             "count" => 1,
-            "data" => 'H4sIAAAAAAAAAyssTy0qqSzNzC9ILE5JS8_Iys6pqkguS8rLNTQyNjE1M7ewNAAAByoXGiQAAAA',
+            "data" => 'H4sIAAAAAAACAyssTy0qqSzNzC9ILE5JS8_Iys6pqkguS8rLNTQyNjE1M7ewNAAAByoXGiQAAAA',
             "enc" => "base64",
             "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);

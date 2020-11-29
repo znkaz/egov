@@ -16,6 +16,7 @@ use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
+use ZnKaz\Egov\Qr\Encoders\GZipDeflateEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipEncoder;
 use ZnKaz\Egov\Qr\Encoders\HexEncoder;
 use ZnKaz\Egov\Qr\Encoders\PclZipEncoder;
@@ -49,7 +50,8 @@ class EncoderService
         $classEncoder = new ClassEncoder([
 //            'zip' => PclZipEncoder::class,
             'zip' => ZipEncoder::class,
-            'gzip' => GZipEncoder::class,
+            'gzip' => new GZipEncoder(ZLIB_ENCODING_GZIP, 9),
+            'gzipDeflate' => new GZipEncoder(ZLIB_ENCODING_RAW, 9),
             'gz' => GZipEncoder::class,
             'base64' => Base64Encoder::class,
             'b64' => Base64Encoder::class,
