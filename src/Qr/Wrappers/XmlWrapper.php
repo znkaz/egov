@@ -13,16 +13,6 @@ class XmlWrapper implements WrapperInterface
         'b64'
     ];
 
-    public function getBlockSize(): int
-    {
-        return $this->blockSize;
-    }
-
-    public function setBlockSize(int $size)
-    {
-        $this->blockSize = $size;
-    }
-
     public function getEncoders(): array
     {
         return $this->encoders;

@@ -7,10 +7,6 @@ use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 interface WrapperInterface
 {
 
-    public function getBlockSize(): int;
-
-    public function setBlockSize(int $size);
-
     public function getEncoders(): array;
 
     public function setEncoders(array $encoders): void;

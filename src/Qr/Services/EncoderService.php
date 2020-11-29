@@ -43,8 +43,9 @@ class EncoderService
         XmlWrapper::class,
     ];
     private $resultEncoders = [];
+    private $maxQrSize;
 
-    public function __construct(WrapperInterface $defaultEntityWrapper, array $resultEncoders = [])
+    public function __construct(WrapperInterface $defaultEntityWrapper, array $resultEncoders = [], int $maxQrSize = 1183)
     {
         // todo: сделать экономный выбор компрессии
         $classEncoder = new ClassEncoder([
@@ -60,15 +61,39 @@ class EncoderService
         $this->resultEncoders = $resultEncoders;
         $this->classEncoder = $classEncoder;
         $this->entityWrapper = $defaultEntityWrapper;
+        $this->maxQrSize = $maxQrSize;
     }
 
-    public function encode($data, WrapperInterface $entityWrapper = null): Collection
+    private function getBarCodeSize(): int {
+        $barCodeEntity = new BarCodeEntity();
+        $barCodeEntity->setId(99);
+        $barCodeEntity->setCount(99);
+        $barCodeEntity->setCreatedAt('2020-11-17T20:55:33.671+06:00');
+        $barCodeEntity->setEntityEncoders($this->entityWrapper->getEncoders());
+        $barCodeEntityClone = clone $barCodeEntity;
+        $barCodeEntityClone->setData('');
+        $block = $this->entityWrapper->encode($barCodeEntityClone);
+        $len = mb_strlen($block);
+        return $len;
+//        dd($len);
+    }
+
+    private function getDataSize() {
+        $wrapSize = $this->getBarCodeSize();
+        $dataSize = $this->maxQrSize - $wrapSize;
+        return $dataSize;
+        dd($dataSize);
+    }
+
+    public function encode($data/*, WrapperInterface $entityWrapper = null*/): Collection
     {
-        $entityWrapper = $entityWrapper ?: $this->entityWrapper;
+        $entityWrapper = /*$entityWrapper ?:*/ $this->entityWrapper;
         $barCoreEntity1 = new BarCodeEntity();
         $resultEncoder = $this->classEncoder->encodersToClasses($this->resultEncoders);
         $encoded = $resultEncoder->encode($data);
-        $encodedParts = str_split($encoded, $entityWrapper->getBlockSize());
+
+//        $encodedParts = str_split($encoded, $entityWrapper->getBlockSize());
+        $encodedParts = str_split($encoded, $this->getDataSize());
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
             $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
@@ -79,6 +104,7 @@ class EncoderService
             $barCodeEntity->setCount(count($encodedParts));
             $barCodeEntity->setCreatedAt('2020-11-17T20:55:33.671+06:00');
             $barCodeEntity->setEntityEncoders($entityWrapper->getEncoders());
+
             $collection->add($entityWrapper->encode($barCodeEntity));
         }
         return $collection;

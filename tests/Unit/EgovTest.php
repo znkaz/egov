@@ -14,7 +14,7 @@ use ZnTool\Test\Base\BaseTest;
 class EgovTest extends BaseTest
 {
 
-    public function testXmlWrapper()
+    public function testXmlBase64Zip()
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
         $wrapper = new XmlWrapper();
@@ -25,12 +25,12 @@ class EgovTest extends BaseTest
         $decoded = $encoderService->decode($encodedCollection);
         $first = $encodedCollection->first();
 
-        $this->assertEquals(6, $encodedCollection->count());
+        $this->assertEquals(4, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
         $this->assertXmlString($first);
     }
 
-    public function testJsonWrapper()
+    public function testJsonBase64Zip()
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
         $wrapper = new JsonWrapper();
@@ -41,12 +41,12 @@ class EgovTest extends BaseTest
         $decoded = $encoderService->decode($encodedCollection);
         $first = $encodedCollection->first();
 
-        $this->assertEquals(5, $encodedCollection->count());
+        $this->assertEquals(4, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
         $this->assertJson($first);
     }
 
-    public function testJsonWrapperDefault()
+    public function testJsonDefault()
     {
         $wrapper = new JsonWrapper();
 //        $wrapper->setEncoders();
@@ -61,7 +61,7 @@ class EgovTest extends BaseTest
         $this->assertEquals('{"id":1,"count":1,"data":"qwertyuiopasdfghjklzxcvbnm1234567890","creationDate":"2020-11-17T20:55:33.671+06:00"}', $first);
     }
 
-    public function testJsonWrapperWithBase64()
+    public function testJsonBase64()
     {
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
@@ -76,7 +76,7 @@ class EgovTest extends BaseTest
         $this->assertEquals('{"id":1,"count":1,"data":"cXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0xMjM0NTY3ODkw","enc":"base64","creationDate":"2020-11-17T20:55:33.671+06:00"}', $first);
     }
 
-    public function testJsonWrapperWithHex()
+    public function testJsonHex()
     {
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['hex']);
@@ -91,7 +91,7 @@ class EgovTest extends BaseTest
         $this->assertEquals('{"id":1,"count":1,"data":"71776572747975696f706173646667686a6b6c7a786376626e6d31323334353637383930","enc":"hex","creationDate":"2020-11-17T20:55:33.671+06:00"}', $first);
     }
 
-    public function testJsonWrapperWithBase64AndZip()
+    public function testJsonBase64AndZip()
     {
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
@@ -113,11 +113,9 @@ class EgovTest extends BaseTest
         ], $result);
         $zipEncoder = new ZipEncoder();
         $this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
-//        $pattern = '/^UEsDBBQAAAA[\s\S]+AAAACQAAAADAAAAb25lcXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0xMjM0NTY3ODkwUEsBAj8DFAAAAAAA[\s\S]+AAAAJAAAAAMAAAAAAAAAAAAAALaBAAAAAG9uZVBLBQYAAAAAAQABADEAAABFAAAAAAA/x';
-//        $this->assertRegExp($pattern, $result['data']);
     }
 
-    public function testJsonWrapperWithBase64AndGZip()
+    public function testJsonBase64AndGZip()
     {
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
