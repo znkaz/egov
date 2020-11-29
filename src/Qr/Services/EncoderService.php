@@ -18,6 +18,7 @@ use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipEncoder;
 use ZnKaz\Egov\Qr\Encoders\HexEncoder;
+use ZnKaz\Egov\Qr\Encoders\PclZipEncoder;
 use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
 use ZnKaz\Egov\Qr\Encoders\SplitEncoder;
@@ -46,13 +47,12 @@ class EncoderService
     {
         // todo: сделать экономный выбор компрессии
         $classEncoder = new ClassEncoder([
-            'ecoCompress' => new EconomicCompressionEncoder([
-                GZipEncoder::class,
-                ZipEncoder::class,
-            ]),
+//            'zip' => PclZipEncoder::class,
             'zip' => ZipEncoder::class,
             'gzip' => GZipEncoder::class,
+            'gz' => GZipEncoder::class,
             'base64' => Base64Encoder::class,
+            'b64' => Base64Encoder::class,
             'hex' => HexEncoder::class,
         ]);
         $this->resultEncoders = $resultEncoders;
@@ -91,12 +91,10 @@ class EncoderService
             $decodedItem = $entityEncoders->decode($barCodeEntity->getData());
             $resultCollection->add($decodedItem);
         }
-        /** @var BarCodeEntity $firstBarCodeEntity */
-        $firstBarCodeEntity = $barCodeCollection->first();
-//        $collectionEncoders = $firstBarCodeEntity->getCollectionEncoders();
         $collectionEncoders = $this->resultEncoders;
         $resultEncoder = $this->classEncoder->encodersToClasses($collectionEncoders);
-        return $resultEncoder->decode($resultCollection->toArray());
+        $rr = $resultCollection->toArray();
+        return $resultEncoder->decode(implode('', $rr));
 
         //return $this->decodeBarCodeCollection($resultCollection, $barCodeCollection);
     }

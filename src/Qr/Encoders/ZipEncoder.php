@@ -2,9 +2,9 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
-use ZnLib\Egov\Helpers\XmlHelper;
+use Exception;
+use ZipArchive;
 
 class ZipEncoder implements EncoderInterface
 {
@@ -20,15 +20,32 @@ class ZipEncoder implements EncoderInterface
         } else {
             throw new Exception('Zip not opened!');
         }
-        $xmlContent = FileHelper::load($zipFile);
+        $xmlContent = file_get_contents($zipFile);
         unlink($zipFile);
         return $xmlContent;
+    }
+
+    private function open(): ZipArchive
+    {
+        $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
+        $zip = new ZipArchive();
+        $res = $zip->open($zipFile);
+        if ($res !== TRUE) {
+            throw new Exception('Zip not opened!');
+        }
+        return $zip;
+    }
+
+    private function close(ZipArchive $zip)
+    {
+        $zip->close();
+        unlink($zipFile);
     }
 
     public function decode($encodedData)
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
-        FileHelper::save($zipFile, $encodedData);
+        file_put_contents($zipFile, $encodedData);
         $zip = new \ZipArchive();
         $res = $zip->open($zipFile);
         if ($res === TRUE) {

@@ -10,11 +10,11 @@ class BarCodeEntity
     private $data;
     private $maxLenght = 650;
     private $createdAt;
-    private $collectionEncoders = [
+    /*private $collectionEncoders = [
         //'zip',
-    ];
+    ];*/
     private $entityEncoders = [
-        'base64',
+        'base64'
     ];
 
     public function getId(): int
@@ -67,7 +67,7 @@ class BarCodeEntity
         $this->createdAt = $createdAt;
     }
 
-    public function getCollectionEncoders()
+    /*public function getCollectionEncoders()
     {
         return $this->collectionEncoders;
     }
@@ -75,7 +75,7 @@ class BarCodeEntity
     public function setCollectionEncoders($collectionEncoders): void
     {
         $this->collectionEncoders = $collectionEncoders;
-    }
+    }*/
 
     public function getEntityEncoders(): array
     {

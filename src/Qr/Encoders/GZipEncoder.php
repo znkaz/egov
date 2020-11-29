@@ -14,10 +14,6 @@ class GZipEncoder implements EncoderInterface
 
     public function decode($encodedData)
     {
-//        dd($encodedData[0]);
-        if(is_array($encodedData)) {
-            $encodedData = $encodedData[0];
-        }
         return gzdecode($encodedData);
     }
 }

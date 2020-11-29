@@ -10,7 +10,7 @@ class XmlWrapper implements WrapperInterface
 
     private $blockSize = 650;
     private $encoders = [
-        'base64'
+        'b64'
     ];
 
     public function getBlockSize(): int

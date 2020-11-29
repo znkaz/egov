@@ -2,9 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
-use ZnLib\Egov\Helpers\XmlHelper;
 
 class PclZipEncoder implements EncoderInterface
 {
@@ -13,13 +11,14 @@ class PclZipEncoder implements EncoderInterface
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
         $archive = new \PclZip($zipFile);
-        $list = $archive->create(array(
-                array( PCLZIP_ATT_FILE_NAME => 'one',
-                    PCLZIP_ATT_FILE_CONTENT => $data
-                )
-            )
-        );
-        $xmlContent = FileHelper::load($zipFile);
+        $list = $archive->create([
+            [
+                PCLZIP_ATT_FILE_NAME => 'one',
+                PCLZIP_ATT_FILE_CONTENT => $data,
+//                PCLZIP_OPT_NO_COMPRESSION
+            ]
+        ]);
+        $xmlContent = file_get_contents($zipFile);
         unlink($zipFile);
         return $xmlContent;
     }
@@ -27,7 +26,7 @@ class PclZipEncoder implements EncoderInterface
     public function decode($encodedData)
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
-        FileHelper::save($zipFile, $encodedData);
+        file_put_contents($zipFile, $encodedData);
         $zip = new \ZipArchive();
         $res = $zip->open($zipFile);
         if ($res === TRUE) {
