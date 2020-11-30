@@ -166,7 +166,7 @@ class EgovTest extends BaseTest
 
     public function assertXmlString(string $actual)
     {
-        $this->assertRegExp('/^<\?xml.+>[\s\S]+<\/.+>$/', $actual);
+        $this->assertRegExp('/^<\?xml.+>[\s\S]+<\/.+>\s$/', $actual);
     }
 
     public function assertNotXmlString(string $actual)
