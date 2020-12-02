@@ -69,9 +69,8 @@ class QrService
     private function forgeFileEntity(string $extension, string $content): FileEntity
     {
         $fileEntity = new FileEntity();
-
         $fileEntity->setExtension($extension);
-        $mimeType = FileHelper::getMimeTypeByFileExtension($extension);
+        $mimeType = FileHelper::mimeTypeByExtension($extension);
         $fileEntity->setMimeType($mimeType);
         $fileEntity->setContent($content);
         return $fileEntity;
