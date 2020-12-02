@@ -133,7 +133,7 @@ class EgovTest extends BaseTest
             "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
         $zipEncoder = new ZipEncoder();
-        //$this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
+        $this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
     }
 
     public function testJsonBase64AndGZip()

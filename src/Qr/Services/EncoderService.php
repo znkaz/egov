@@ -82,7 +82,7 @@ class EncoderService
         $wrapSize = $this->getBarCodeSize();
         $dataSize = $this->maxQrSize - $wrapSize;
         return $dataSize;
-        dd($dataSize);
+//        dd($dataSize);
     }
 
     public function encode($data/*, WrapperInterface $entityWrapper = null*/): Collection

@@ -12,7 +12,7 @@ class EgovFactory
     {
         $wrapper = new XmlWrapper();
         $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService = new EncoderService($wrapper, ['zip'], 800);
         return $encoderService;
     }
 }
