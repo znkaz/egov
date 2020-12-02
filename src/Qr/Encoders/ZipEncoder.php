@@ -13,9 +13,6 @@ class ZipEncoder implements EncoderInterface
 
     public function encode($data)
     {
-
-        return file_get_contents('/home/vitaliy/common/var/www/orleu/crypt/var/tmp/qrZip/2f22aaec-2214-40cd-d46d-d3f508bd4746/one.zip');
-
         $tmpDir = self::getTmpDirectory();
         $oneFile = $tmpDir . '/one';
         $zipFile = $tmpDir . '/arch.zip';
@@ -24,18 +21,15 @@ class ZipEncoder implements EncoderInterface
         $res = $zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
         if ($res === TRUE) {
             file_put_contents($oneFile, $data);
-//            dd($oneFile);
             $zip->addFile($oneFile, 'one');
 //            $xmlContent = $zip->addFromString('one', $data);
             $zip->close();
         } else {
             throw new Exception('Zip not opened!');
         }
-        $xmlContent = file_get_contents($zipFile);
+        $binaryContent = file_get_contents($zipFile);
         FileHelper::removeDirectory($tmpDir);
-//        dd($zipFile);
-//        unlink($zipFile);
-        return $xmlContent;
+        return $binaryContent;
     }
 
     public function decode($encodedData)
@@ -44,7 +38,6 @@ class ZipEncoder implements EncoderInterface
         $oneFile = $tmpDir . '/one';
         $zipFile = $tmpDir . '/arch.zip';
 
-//        $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');
         file_put_contents($zipFile, $encodedData);
         $zip = new ZipArchive();
         $res = $zip->open($zipFile);
@@ -54,7 +47,6 @@ class ZipEncoder implements EncoderInterface
         } else {
             throw new Exception('Zip not opened!');
         }
-//        unlink($zipFile);
         FileHelper::removeDirectory($tmpDir);
         return $xmlContent;
     }
