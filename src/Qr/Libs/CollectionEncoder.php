@@ -9,10 +9,6 @@ use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
 class CollectionEncoder implements EncoderInterface
 {
-    public function compressionRate(): float
-    {
-        return 1;
-    }
 
     private $encoderCollection;
 

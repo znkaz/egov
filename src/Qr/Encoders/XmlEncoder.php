@@ -22,11 +22,6 @@ class XmlEncoder implements EncoderInterface
         $this->xml = new SymfonyXmlEncoder();
     }
 
-    public function compressionRate(): float
-    {
-        return 1;
-    }
-
     public function encode($data)
     {
         if (empty($data)) {

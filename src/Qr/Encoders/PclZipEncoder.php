@@ -5,11 +5,6 @@ namespace ZnKaz\Egov\Qr\Encoders;
 class PclZipEncoder implements EncoderInterface
 {
 
-    public function compressionRate(): float
-    {
-        return 1;
-    }
-
     public function encode($data)
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'qrZip');

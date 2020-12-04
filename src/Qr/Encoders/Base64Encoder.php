@@ -4,7 +4,7 @@ namespace ZnKaz\Egov\Qr\Encoders;
 
 use ZnCrypt\Base\Domain\Helpers\SafeBase64Helper;
 
-class Base64Encoder implements EncoderInterface
+class Base64Encoder implements EntityEncoderInterface
 {
 
     public function compressionRate(): float

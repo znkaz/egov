@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-class HexEncoder implements EncoderInterface
+class HexEncoder implements EntityEncoderInterface
 {
 
     public function compressionRate(): float

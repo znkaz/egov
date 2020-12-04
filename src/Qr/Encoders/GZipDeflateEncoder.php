@@ -14,11 +14,6 @@ class GZipDeflateEncoder implements EncoderInterface
         $this->level = $level;
     }
 
-    public function compressionRate(): float
-    {
-        return 1;
-    }
-
     public function encode($data)
     {
         if($this->encoding == ZLIB_ENCODING_GZIP) {

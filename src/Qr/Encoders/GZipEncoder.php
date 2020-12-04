@@ -14,11 +14,6 @@ class GZipEncoder implements EncoderInterface
         $this->level = $level;
     }
 
-    public function compressionRate(): float
-    {
-        return 1;
-    }
-
     public function encode($data)
     {
         return gzcompress($data, $this->level, $this->encoding);

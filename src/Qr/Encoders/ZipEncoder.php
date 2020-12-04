@@ -10,11 +10,6 @@ use ZipArchive;
 class ZipEncoder implements EncoderInterface
 {
 
-    public function compressionRate(): float
-    {
-        return 1;
-    }
-
     public function encode($data)
     {
         $tmpDir = self::getTmpDirectory();
