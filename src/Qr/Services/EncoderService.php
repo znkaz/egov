@@ -101,8 +101,11 @@ class EncoderService
         return $rate;
     }
 
-    public function encode($data/*, WrapperInterface $entityWrapper = null*/): Collection
+    public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
     {
+        if(empty($data)) {
+            throw new \InvalidArgumentException('Empty data for encode!');
+        }
         $entityWrapper = /*$entityWrapper ?:*/
             $this->entityWrapper;
         $barCoreEntity1 = new BarCodeEntity();
