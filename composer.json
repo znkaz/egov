@@ -12,7 +12,7 @@
   "require": {
     "bacon/bacon-qr-code": "dev-master",
     "symfony/serializer": "5.x-dev",
-    "zncore/base": "dev-master"
+    "zncore/domain": "dev-master"
   },
   "autoload": {
     "psr-4": {
