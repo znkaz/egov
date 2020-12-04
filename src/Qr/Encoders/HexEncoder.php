@@ -2,10 +2,13 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
-
 class HexEncoder implements EncoderInterface
 {
+
+    public function compressionRate(): float
+    {
+        return 2;
+    }
 
     public function encode($data)
     {

@@ -17,7 +17,13 @@ class CollectionEncoder implements EncoderInterface
         $this->encoderCollection = $encoderCollection;
     }
 
-    public function encode($data) {
+    public function getEncoders(): Collection
+    {
+        return $this->encoderCollection;
+    }
+
+    public function encode($data)
+    {
         //$data = EntityHelper::toArray($data);
         $encoders = $this->encoderCollection->all();
         foreach ($encoders as $encoderClass) {
@@ -28,7 +34,8 @@ class CollectionEncoder implements EncoderInterface
         return $data;
     }
 
-    public function decode($data) {
+    public function decode($data)
+    {
         $encoders = $this->encoderCollection->all();
         $encoders = array_reverse($encoders);
         foreach ($encoders as $encoderClass) {

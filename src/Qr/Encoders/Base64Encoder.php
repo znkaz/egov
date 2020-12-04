@@ -3,10 +3,14 @@
 namespace ZnKaz\Egov\Qr\Encoders;
 
 use ZnCrypt\Base\Domain\Helpers\SafeBase64Helper;
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 
 class Base64Encoder implements EncoderInterface
 {
+
+    public function compressionRate(): float
+    {
+        return 4 / 3;
+    }
 
     public function encode($data)
     {

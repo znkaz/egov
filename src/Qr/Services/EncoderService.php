@@ -11,10 +11,10 @@ use ZnCore\Base\Helpers\StringHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Domain\Helpers\EntityHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\Base64Encoder;
 use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
 use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
+use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipDeflateEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipEncoder;
@@ -64,7 +64,13 @@ class EncoderService
         $this->maxQrSize = $maxQrSize;
     }
 
-    private function getBarCodeSize(): int {
+    private function calcEncodedLen()
+    {
+
+    }
+
+    private function getBarCodeSize(): int
+    {
         $barCodeEntity = new BarCodeEntity();
         $barCodeEntity->setId(99);
         $barCodeEntity->setCount(99);
@@ -73,27 +79,49 @@ class EncoderService
         $barCodeEntityClone = clone $barCodeEntity;
         $barCodeEntityClone->setData('');
         $block = $this->entityWrapper->encode($barCodeEntityClone);
+        //dd($barCodeEntityClone);
         $len = mb_strlen($block);
         return $len;
-//        dd($len);
     }
 
-    private function getDataSize() {
+    private function getDataSize()
+    {
         $wrapSize = $this->getBarCodeSize();
+        //dd($this->maxQrSize);
         $dataSize = $this->maxQrSize - $wrapSize;
+        //dd($dataSize);
         return $dataSize;
-//        dd($dataSize);
     }
 
     public function encode($data/*, WrapperInterface $entityWrapper = null*/): Collection
     {
-        $entityWrapper = /*$entityWrapper ?:*/ $this->entityWrapper;
+        $entityWrapper = /*$entityWrapper ?:*/
+            $this->entityWrapper;
         $barCoreEntity1 = new BarCodeEntity();
         $resultEncoder = $this->classEncoder->encodersToClasses($this->resultEncoders);
         $encoded = $resultEncoder->encode($data);
 
 //        $encodedParts = str_split($encoded, $entityWrapper->getBlockSize());
-        $encodedParts = str_split($encoded, $this->getDataSize());
+        $dataSize = $this->getDataSize();
+
+        $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
+        $rate = 1;
+        foreach ($entityEncoder->getEncoders() as $resultEncoder) {
+           // dd($resultEncoder);
+            $resultEncoderInstance = new $resultEncoder;
+           //dump($resultEncoderInstance->compressionRate() );
+            if($resultEncoderInstance->compressionRate() > $rate) {
+                $rate = $resultEncoderInstance->compressionRate();
+            }
+        }
+
+        /*dd($rate);
+
+        dump($data);
+        dump($encoded);
+        dd(mb_strlen($data) / mb_strlen($encoded));*/
+
+        $encodedParts = str_split($encoded, ($dataSize / $rate - 8));
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
             $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
@@ -156,7 +184,7 @@ class EncoderService
             /** @var WrapperInterface $wrapperInstance */
             $wrapperInstance = new $wrapperClass;
             $isDetected = $wrapperInstance->isMatch($encoded);
-            if($isDetected) {
+            if ($isDetected) {
                 return $wrapperInstance;
             }
         }

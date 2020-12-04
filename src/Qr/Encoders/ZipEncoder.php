@@ -4,12 +4,16 @@ namespace ZnKaz\Egov\Qr\Encoders;
 
 use ZnCore\Base\Helpers\StringHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use Exception;
 use ZipArchive;
 
 class ZipEncoder implements EncoderInterface
 {
+
+    public function compressionRate(): float
+    {
+        return 1;
+    }
 
     public function encode($data)
     {

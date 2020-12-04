@@ -38,7 +38,10 @@ class XmlWrapper implements WrapperInterface
         $barCode['elementsAmount'] = $entity->getCount();
         $barCode['FavorID'] = 10100464053940;
         $xmlEncoder = new XmlEncoder();
-        return $xmlEncoder->encode(['BarcodeElement' => $barCode]);
+        $encoded = $xmlEncoder->encode(['BarcodeElement' => $barCode]);
+        $encoded = trim($encoded);
+        $encoded = preg_replace('/(\>\s+\<)/i', '><', $encoded);
+        return $encoded;
     }
 
     public function decode(string $encodedData): BarCodeEntity

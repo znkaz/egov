@@ -2,8 +2,6 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
-
 class GZipEncoder implements EncoderInterface
 {
 
@@ -14,6 +12,11 @@ class GZipEncoder implements EncoderInterface
     {
         $this->encoding = $encoding;
         $this->level = $level;
+    }
+
+    public function compressionRate(): float
+    {
+        return 1;
     }
 
     public function encode($data)

@@ -3,7 +3,6 @@
 namespace ZnKaz\Egov\Qr\Encoders;
 
 use ZnCore\Base\Helpers\StringHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use Symfony\Component\Serializer\Encoder\XmlEncoder as SymfonyXmlEncoder;
 use Exception;
 use InvalidArgumentException;
@@ -21,6 +20,11 @@ class XmlEncoder implements EncoderInterface
         $this->formatOutput = $formatOutput;
         $this->encoding = $encoding;
         $this->xml = new SymfonyXmlEncoder();
+    }
+
+    public function compressionRate(): float
+    {
+        return 1;
     }
 
     public function encode($data)
