@@ -11,7 +11,7 @@
   "minimum-stability": "dev",
   "require": {
     "bacon/bacon-qr-code": "dev-master",
-    "symfony/serializer": "5.x-dev",
+    "symfony/serializer": "^4.4|^5.0",
     "zncore/domain": "dev-master"
   },
   "autoload": {
