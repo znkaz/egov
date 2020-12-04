@@ -11,7 +11,8 @@
   "minimum-stability": "dev",
   "require": {
     "bacon/bacon-qr-code": "dev-master",
-    "pclzip/pclzip": "dev-master"
+    "pclzip/pclzip": "dev-master",
+    "zncore/base": "dev-master"
   },
   "autoload": {
     "psr-4": {

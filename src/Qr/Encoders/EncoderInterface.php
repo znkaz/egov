@@ -4,9 +4,11 @@
 namespace ZnKaz\Egov\Qr\Encoders;
 
 
-interface EncoderInterface extends \ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface
+interface EncoderInterface
 {
 
     public function compressionRate(): float;
+    public function encode($data);
+    public function decode($encodedData);
 
 }
