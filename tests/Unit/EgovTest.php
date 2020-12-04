@@ -45,7 +45,7 @@ class EgovTest extends BaseTest
         $decoded = $encoderService->decode($encodedCollection);
         $first = $encodedCollection->first();
 
-        $this->assertEquals(6, $encodedCollection->count());
+        $this->assertEquals(5, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
         $this->assertXmlString($first);
     }
