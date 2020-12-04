@@ -3,12 +3,16 @@
 namespace ZnKaz\Egov\Qr\Libs;
 
 use Illuminate\Support\Collection;
-use ZnCrypt\Base\Domain\Libs\Encoders\EncoderInterface;
 use ZnCore\Domain\Helpers\EntityHelper;
 use ZnCore\Base\Helpers\InstanceHelper;
+use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
 class CollectionEncoder implements EncoderInterface
 {
+    public function compressionRate(): float
+    {
+        return 1;
+    }
 
     private $encoderCollection;
 
