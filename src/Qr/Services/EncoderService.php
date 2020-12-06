@@ -12,14 +12,11 @@ use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Domain\Helpers\EntityHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
-use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnCore\Base\Encoders\GZipEncoder;
 use ZnKaz\Egov\Qr\Encoders\HexEncoder;
 use ZnKaz\Egov\Qr\Encoders\PclZipEncoder;
 use ZnLib\Egov\Helpers\XmlHelper;
-use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
-use ZnKaz\Egov\Qr\Encoders\SplitEncoder;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnCore\Base\Encoders\ZipEncoder;
@@ -178,9 +175,7 @@ class EncoderService
             if ($isDetected) {
                 return $wrapperInstance;
             }
-
         }
-        dd($encoded);
         throw new \Exception('Wrapper not detected!');
     }
 
