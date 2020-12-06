@@ -35,10 +35,7 @@ class EncoderService
 
     private $classEncoder;
     private $defaultEntityWrapper;
-    private $wrappers = [
-//        JsonWrapper::class,
-//        XmlWrapper::class,
-    ];
+    private $wrappers = [];
     private $resultEncoders = [];
     private $maxQrSize;
 

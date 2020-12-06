@@ -16,6 +16,11 @@ class BarCodeEntity
         'base64'
     ];
 
+    public function __construct()
+    {
+        $this->setCreatedAt(new DateTime());
+    }
+
     public function getId(): int
     {
         return $this->id;

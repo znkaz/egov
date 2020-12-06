@@ -12,9 +12,6 @@ class XmlWrapper extends \ZnKaz\Egov\Qr\Wrappers\XmlWrapper implements WrapperIn
 {
 
     protected static $favorId;
-    protected $encoders = [
-        'base64'
-    ];
 
     public function encode(BarCodeEntity $entity): string
     {
