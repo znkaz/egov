@@ -4,9 +4,6 @@ namespace ZnKaz\Egov\Qr\Libs;
 
 use Illuminate\Support\Collection;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\Base64Encoder;
-use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
-use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
 
 class ClassEncoder
 {

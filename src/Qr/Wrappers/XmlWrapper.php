@@ -3,7 +3,7 @@
 namespace ZnKaz\Egov\Qr\Wrappers;
 
 use ZnCore\Base\Helpers\StringHelper;
-use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
+use ZnCore\Base\Encoders\XmlEncoder;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use DateTime;
 
@@ -35,7 +35,6 @@ class XmlWrapper implements WrapperInterface
         $barCode = [
             "@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
         ];
-
         $barCode['creationDate'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
         $barCode['elementData'] = $entity->getData();
         $barCode['elementNumber'] = $entity->getId();

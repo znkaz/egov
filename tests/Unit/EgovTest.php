@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use Illuminate\Support\Collection;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
-use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
+use ZnCore\Base\Encoders\ZipEncoder;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
@@ -164,7 +164,7 @@ class EgovTest extends BaseTest
     {
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['gzip']);
+        $encoderService = new EncoderService($wrapper, ['gz']);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
