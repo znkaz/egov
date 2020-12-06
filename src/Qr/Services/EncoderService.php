@@ -4,11 +4,10 @@ namespace ZnKaz\Egov\Qr\Services;
 
 use Illuminate\Support\Collection;
 use ZnCore\Base\Encoders\AggregateEncoder;
-use ZnCore\Base\Helpers\InstanceHelper;
 use ZnCore\Domain\Helpers\EntityHelper;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
-use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnKaz\Egov\Qr\Libs\DataSize;
+use ZnKaz\Egov\Qr\Libs\WrapperDetector;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
 use DateTime;
 use Exception;
@@ -16,6 +15,7 @@ use Exception;
 class EncoderService
 {
 
+    private $wrapperDetector;
     private $defaultEntityWrapper;
     private $wrappers = [];
     private $resultEncoder;
@@ -23,32 +23,27 @@ class EncoderService
     private $dataSize;
 
     public function __construct(
-        array $wrappers,
+        WrapperDetector $wrapperDetector,
         AggregateEncoder $resultEncoder,
         AggregateEncoder $wrapperEncoder,
         WrapperInterface $defaultEntityWrapper,
-        DataSize $dataSize,
-        int $maxQrSize = 1183
+        DataSize $dataSize
     )
     {
-        $this->wrappers = $wrappers;
+        $this->wrapperDetector = $wrapperDetector;
         $this->resultEncoder = $resultEncoder;
         $this->wrapperEncoder = $wrapperEncoder;
         $this->entityWrapper = $defaultEntityWrapper;
         $this->dataSize = $dataSize;
     }
 
-    public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
+    public function encode(string $data): Collection
     {
         if (empty($data)) {
             throw new \InvalidArgumentException('Empty data for encode!');
         }
-        $entityWrapper = /*$entityWrapper ?:*/
-            $this->entityWrapper;
         $encoded = $this->resultEncoder->encode($data);
-
-        $dataSize = $this->dataSize->getSize($this->wrapperEncoder, $entityWrapper);
-
+        $dataSize = $this->dataSize->getSize($this->wrapperEncoder, $this->entityWrapper);
         $encodedParts = str_split($encoded, $dataSize);
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
@@ -58,8 +53,8 @@ class EncoderService
             $barCodeEntity->setData($encodedItem);
             $barCodeEntity->setCount(count($encodedParts));
             $barCodeEntity->setCreatedAt(new DateTime());
-            $barCodeEntity->setEntityEncoders($entityWrapper->getEncoders());
-            $collection->add($entityWrapper->encode($barCodeEntity));
+            $barCodeEntity->setEntityEncoders($this->entityWrapper->getEncoders());
+            $collection->add($this->entityWrapper->encode($barCodeEntity));
         }
         return $collection;
     }
@@ -85,25 +80,12 @@ class EncoderService
     {
         $collection = new Collection();
         foreach ($array as $item) {
-            $wrapper = $this->detectWrapper($item);
+            $wrapper = $this->wrapperDetector->detect($item);
             $barCodeEntity = $wrapper->decode($item);
             $collection->add($barCodeEntity);
         }
         $arr = EntityHelper::indexingCollection($collection, 'id');
         ksort($arr);
         return new Collection($arr);
-    }
-
-    private function detectWrapper(string $encoded): WrapperInterface
-    {
-        foreach ($this->wrappers as $wrapperClass) {
-            /** @var WrapperInterface $wrapperInstance */
-            $wrapperInstance = InstanceHelper::create($wrapperClass);
-            $isDetected = $wrapperInstance->isMatch($encoded);
-            if ($isDetected) {
-                return $wrapperInstance;
-            }
-        }
-        throw new \Exception('Wrapper not detected!');
     }
 }
