@@ -6,9 +6,7 @@ use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnKaz\Egov\Qr\Libs\DataSize;
 use ZnKaz\Egov\Qr\Libs\WrapperDetector;
 use ZnKaz\Egov\Qr\Services\EncoderService;
-use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
-use ZnKaz\Egov\Wrappers\XmlWrapper;
 
 class EncoderServiceFactory
 {

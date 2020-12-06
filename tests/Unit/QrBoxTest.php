@@ -5,8 +5,6 @@ namespace ZnKaz\Egov\Tests\Unit;
 use ZnCore\Base\Encoders\ZipEncoder;
 use ZnKaz\Egov\Qr\Factories\ClassEncoderFactory;
 use ZnKaz\Egov\Qr\Factories\EncoderServiceFactory;
-use ZnKaz\Egov\Qr\Libs\DataSize;
-use ZnKaz\Egov\Qr\Libs\WrapperDetector;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
@@ -175,18 +173,6 @@ class QrBoxTest extends BaseTest
             XmlWrapper::class,
             JsonWrapper::class,
         ];
-        /*$wrapperDetector = new WrapperDetector($wrappers);
-        $resultEncoder = $classEncoder->encodersToClasses($resultEncoders);
-        $wrapperEncoder = $classEncoder->encodersToClasses($wrapper->getEncoders());
-        $dataSize = new DataSize($wrapperEncoder, $wrapper);
-        $encoderService = new EncoderService(
-            $wrapperDetector,
-            $resultEncoder,
-            $wrapperEncoder,
-            $wrapper,
-            $dataSize
-        );
-        return $encoderService;*/
         $maxQrSize = 1183;
         return EncoderServiceFactory::createService($resultEncoders, $wrappers, $wrapper, $classEncoder, $maxQrSize);
     }

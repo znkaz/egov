@@ -6,15 +6,6 @@ use Illuminate\Support\Collection;
 use ZnCore\Base\Encoders\XmlEncoder;
 use ZnCore\Base\Enums\RegexpPatternEnum;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
-use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
-use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
-use ZnCore\Base\Encoders\ZipEncoder;
-use ZnKaz\Egov\Qr\Factories\EncoderServiceFactory;
-use ZnKaz\Egov\Qr\Libs\ClassEncoder;
-use ZnKaz\Egov\Qr\Services\EncoderService;
-use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
-use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
-use ZnKaz\Egov\Wrappers\XmlWrapper;
 
 class EgovTest extends BaseTest
 {
