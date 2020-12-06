@@ -11,9 +11,7 @@ class XmlWrapper implements WrapperInterface
 {
 
     private $favorId;
-    private $encoders = [
-        'base64'
-    ];
+    private $encoders = [];
 
     public function getEncoders(): array
     {

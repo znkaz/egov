@@ -3,6 +3,7 @@
 namespace ZnKaz\Egov\Qr\Libs;
 
 use Illuminate\Support\Collection;
+use ZnCore\Base\Encoders\AggregateEncoder;
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 
 class ClassEncoder
@@ -20,14 +21,13 @@ class ClassEncoder
         return ArrayHelper::getValue($this->assoc, $name);
     }
 
-    public function encodersToClasses(array $names): CollectionEncoder
+    public function encodersToClasses(array $names): AggregateEncoder
     {
         $classes = [];
         foreach ($names as $name) {
             $classes[] = $this->encoderToClass($name);
         }
-        $encoders = new CollectionEncoder(new Collection($classes));
+        $encoders = new AggregateEncoder(new Collection($classes));
         return $encoders;
     }
-
 }
