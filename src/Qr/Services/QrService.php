@@ -3,7 +3,6 @@
 namespace ZnKaz\Egov\Qr\Services;
 
 use BaconQrCode\Renderer\Image\EpsImageBackEnd;
-use BaconQrCode\Renderer\Image\ImageBackEndInterface;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;

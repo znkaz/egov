@@ -10,7 +10,7 @@ use ZnKaz\Egov\Wrappers\XmlWrapper;
 class EgovEncoderServiceFactory
 {
 
-    public static function createServiceForEgov(int $maxQrSize = 1183): EncoderService
+    public static function createService(int $maxQrSize = 1183): EncoderService
     {
         $classEncoder = ClassEncoderFactory::create();
         $wrapper = new XmlWrapper();

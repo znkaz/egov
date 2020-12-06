@@ -2,7 +2,6 @@
 
 namespace ZnKaz\Egov\Qr\Wrappers;
 
-use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use DateTime;
 
