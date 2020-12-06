@@ -4,6 +4,7 @@ namespace ZnKaz\Egov\Qr\Wrappers;
 
 use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
+use DateTime;
 
 class JsonWrapper implements WrapperInterface
 {
@@ -34,7 +35,7 @@ class JsonWrapper implements WrapperInterface
         if($entity->getEntityEncoders()) {
             $barCode['enc'] = implode(',', $entity->getEntityEncoders());
         }
-        $barCode['creationDate'] = $entity->getCreatedAt();
+        $barCode['creationDate'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
         $jsonContent = json_encode($barCode);
         return $jsonContent;
     }
@@ -51,7 +52,7 @@ class JsonWrapper implements WrapperInterface
         } else {
             $entity->setEntityEncoders([]);
         }
-        $entity->setCreatedAt($decoded['creationDate']);
+        $entity->setCreatedAt(new DateTime($decoded['creationDate']));
         return $entity;
     }
 }

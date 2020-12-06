@@ -2,6 +2,8 @@
 
 namespace ZnKaz\Egov\Qr\Entities;
 
+use DateTime;
+
 class BarCodeEntity
 {
 
@@ -10,9 +12,6 @@ class BarCodeEntity
     private $data;
     private $maxLenght = 650;
     private $createdAt;
-    /*private $collectionEncoders = [
-        //'zip',
-    ];*/
     private $entityEncoders = [
         'base64'
     ];
@@ -57,25 +56,15 @@ class BarCodeEntity
         $this->maxLenght = $maxLenght;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
-
-    /*public function getCollectionEncoders()
-    {
-        return $this->collectionEncoders;
-    }
-
-    public function setCollectionEncoders($collectionEncoders): void
-    {
-        $this->collectionEncoders = $collectionEncoders;
-    }*/
 
     public function getEntityEncoders(): array
     {

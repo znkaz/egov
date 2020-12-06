@@ -31,6 +31,7 @@ use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
 use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
 use Zxing\QrReader;
 use Exception;
+use DateTime;
 
 class EncoderService
 {
@@ -73,7 +74,7 @@ class EncoderService
         $barCodeEntity = new BarCodeEntity();
         $barCodeEntity->setId(99);
         $barCodeEntity->setCount(99);
-        $barCodeEntity->setCreatedAt('2020-11-17T20:55:33.671+06:00');
+        $barCodeEntity->setCreatedAt(new DateTime('2020-11-17T20:55:33.671+06:00'));
         $barCodeEntity->setEntityEncoders($this->entityWrapper->getEncoders());
         $barCodeEntityClone = clone $barCodeEntity;
         $barCodeEntityClone->setData('');
@@ -123,7 +124,9 @@ class EncoderService
             $barCodeEntity->setId($index + 1);
             $barCodeEntity->setData($encodedItem);
             $barCodeEntity->setCount(count($encodedParts));
-            $barCodeEntity->setCreatedAt('2020-11-17T20:55:33.671+06:00');
+
+            $barCodeEntity->setCreatedAt(new DateTime('2020-11-17T20:55:33.671+06:00'));
+            //                                     "2020-12-06T04:23:31.197+00:00"
             $barCodeEntity->setEntityEncoders($entityWrapper->getEncoders());
             $collection->add($entityWrapper->encode($barCodeEntity));
         }
