@@ -2,99 +2,40 @@
 
 namespace ZnKaz\Egov\Qr\Services;
 
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
 use Illuminate\Support\Collection;
-use ZnCore\Base\Helpers\StringHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Encoders\AggregateEncoder;
+use ZnCore\Base\Helpers\InstanceHelper;
 use ZnCore\Domain\Helpers\EntityHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
-use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
-use ZnCore\Base\Encoders\GZipEncoder;
-use ZnKaz\Egov\Qr\Encoders\HexEncoder;
-use ZnKaz\Egov\Qr\Encoders\PclZipEncoder;
-use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
-use ZnCore\Base\Encoders\ZipEncoder;
-use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
+use ZnKaz\Egov\Qr\Libs\DataSize;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
-use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
-use Zxing\QrReader;
-use Exception;
 use DateTime;
+use Exception;
 
 class EncoderService
 {
 
-    private $classEncoder;
     private $defaultEntityWrapper;
     private $wrappers = [];
-    private $resultEncoders = [];
-    private $maxQrSize;
+    private $resultEncoder;
+    private $wrapperEncoder;
+    private $dataSize;
 
-    public function __construct(WrapperInterface $defaultEntityWrapper, array $resultEncoders = [], int $maxQrSize = 1183)
-    {
-        // todo: сделать экономный выбор компрессии
-        $classEncoder = new ClassEncoder([
-//            'zip' => PclZipEncoder::class,
-            'zip' => ZipEncoder::class,
-            'gz' => new GZipEncoder(ZLIB_ENCODING_GZIP, 9),
-            'gzDeflate' => new GZipEncoder(ZLIB_ENCODING_RAW, 9),
-            'base64' => Base64Encoder::class,
-            'b64' => Base64Encoder::class,
-            'hex' => HexEncoder::class,
-        ]);
-        $this->resultEncoders = $resultEncoders;
-        $this->classEncoder = $classEncoder;
-        $this->entityWrapper = $defaultEntityWrapper;
-        $this->maxQrSize = $maxQrSize;
-    }
-
-    public function setWrappers(array $wrappers): void
+    public function __construct(
+        array $wrappers,
+        AggregateEncoder $resultEncoder,
+        AggregateEncoder $wrapperEncoder,
+        WrapperInterface $defaultEntityWrapper,
+        DataSize $dataSize,
+        int $maxQrSize = 1183
+    )
     {
         $this->wrappers = $wrappers;
-    }
-
-    public function getWrappers(): array
-    {
-        return $this->wrappers;
-    }
-
-    private function getBarCodeSize(): int
-    {
-        $barCodeEntity = new BarCodeEntity();
-        $barCodeEntity->setId(99);
-        $barCodeEntity->setCount(99);
-        $barCodeEntity->setCreatedAt(new DateTime('2020-11-17T20:55:33.671+06:00'));
-        $barCodeEntity->setEntityEncoders($this->entityWrapper->getEncoders());
-        $barCodeEntityClone = clone $barCodeEntity;
-        $barCodeEntityClone->setData('');
-        $block = $this->entityWrapper->encode($barCodeEntityClone);
-        $len = mb_strlen($block);
-        return $len;
-    }
-
-    private function getDataSize()
-    {
-        $wrapSize = $this->getBarCodeSize();
-        $dataSize = $this->maxQrSize - $wrapSize;
-        return $dataSize;
-    }
-
-    private function getDataSizeRateByEncoders($encoders): float
-    {
-        $rate = 1;
-        foreach ($encoders as $resultEncoder) {
-            $resultEncoderInstance = new $resultEncoder;
-            if ($resultEncoderInstance->compressionRate() > $rate) {
-                $rate = $resultEncoderInstance->compressionRate();
-            }
-        }
-        return $rate;
+        $this->resultEncoder = $resultEncoder;
+        $this->wrapperEncoder = $wrapperEncoder;
+        $this->entityWrapper = $defaultEntityWrapper;
+        $this->dataSize = $dataSize;
     }
 
     public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
@@ -104,17 +45,14 @@ class EncoderService
         }
         $entityWrapper = /*$entityWrapper ?:*/
             $this->entityWrapper;
-        $barCoreEntity1 = new BarCodeEntity();
-        $resultEncoder = $this->classEncoder->encodersToClasses($this->resultEncoders);
-        $encoded = $resultEncoder->encode($data);
-        $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
-        $rate = $this->getDataSizeRateByEncoders($entityEncoder->getEncoders());
-        $dataSize = $this->getDataSize() / $rate;
+        $encoded = $this->resultEncoder->encode($data);
+
+        $dataSize = $this->dataSize->getSize($this->wrapperEncoder, $entityWrapper);
+
         $encodedParts = str_split($encoded, $dataSize);
         $collection = new Collection();
         foreach ($encodedParts as $index => $item) {
-            $entityEncoder = $this->classEncoder->encodersToClasses($entityWrapper->getEncoders());
-            $encodedItem = $entityEncoder->encode($item);
+            $encodedItem = $this->wrapperEncoder->encode($item);
             $barCodeEntity = new BarCodeEntity();
             $barCodeEntity->setId($index + 1);
             $barCodeEntity->setData($encodedItem);
@@ -131,21 +69,11 @@ class EncoderService
         $barCodeCollection = $this->arrayToCollection($encodedData);
         $resultCollection = new Collection();
         foreach ($barCodeCollection as $barCodeEntity) {
-            $entityEncoders = $this->classEncoder->encodersToClasses($barCodeEntity->getEntityEncoders());
-            $decodedItem = $entityEncoders->decode($barCodeEntity->getData());
+            $decodedItem = $this->wrapperEncoder->decode($barCodeEntity->getData());
             $resultCollection->add($decodedItem);
         }
-        $collectionEncoders = $this->resultEncoders;
-        $resultEncoder = $this->classEncoder->encodersToClasses($collectionEncoders);
-        $rr = $resultCollection->toArray();
-        return $resultEncoder->decode(implode('', $rr));
-
-        //return $this->decodeBarCodeCollection($resultCollection, $barCodeCollection);
-    }
-
-    private function decodeBarCodeCollection(Collection $resultCollection, Collection $barCodeCollection)
-    {
-
+        $resultArray = $resultCollection->toArray();
+        return $this->resultEncoder->decode(implode('', $resultArray));
     }
 
     /**
@@ -170,17 +98,12 @@ class EncoderService
     {
         foreach ($this->wrappers as $wrapperClass) {
             /** @var WrapperInterface $wrapperInstance */
-            $wrapperInstance = new $wrapperClass;
+            $wrapperInstance = InstanceHelper::create($wrapperClass);
             $isDetected = $wrapperInstance->isMatch($encoded);
             if ($isDetected) {
                 return $wrapperInstance;
             }
         }
         throw new \Exception('Wrapper not detected!');
-    }
-
-    private function decodeCollection($arr)
-    {
-
     }
 }

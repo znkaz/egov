@@ -3,6 +3,8 @@
 namespace ZnKaz\Egov\Tests\Unit;
 
 use ZnCore\Base\Encoders\ZipEncoder;
+use ZnKaz\Egov\Qr\Factories\ClassEncoderFactory;
+use ZnKaz\Egov\Qr\Libs\DataSize;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
@@ -166,11 +168,22 @@ class QrBoxTest extends BaseTest
 
     protected function createEncoderService(WrapperInterface $wrapper, array $resultEncoders = []): EncoderService
     {
-        $encoderService = new EncoderService($wrapper, $resultEncoders);
-        $encoderService->setWrappers([
+        $classEncoder = ClassEncoderFactory::create();
+        $wrappers = [
             XmlWrapper::class,
             JsonWrapper::class,
-        ]);
+        ];
+
+        $resultEncoder = $classEncoder->encodersToClasses($resultEncoders);
+        $wrapperEncoder = $classEncoder->encodersToClasses($wrapper->getEncoders());
+        $dataSize = new DataSize();
+        $encoderService = new EncoderService(
+            $wrappers,
+            $resultEncoder,
+            $wrapperEncoder,
+            $wrapper,
+            $dataSize
+        );
         return $encoderService;
     }
 }
