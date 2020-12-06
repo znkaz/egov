@@ -178,7 +178,9 @@ class EncoderService
             if ($isDetected) {
                 return $wrapperInstance;
             }
+
         }
+        dd($encoded);
         throw new \Exception('Wrapper not detected!');
     }
 

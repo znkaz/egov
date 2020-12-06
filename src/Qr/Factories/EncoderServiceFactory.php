@@ -3,7 +3,8 @@
 namespace ZnKaz\Egov\Qr\Factories;
 
 use ZnKaz\Egov\Qr\Services\EncoderService;
-use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
+use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
+use ZnKaz\Egov\Wrappers\XmlWrapper;
 
 class EncoderServiceFactory
 {
@@ -13,6 +14,9 @@ class EncoderServiceFactory
         $wrapper = new XmlWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip'], $maxQrSize);
+        $encoderService->setWrappers([
+            XmlWrapper::class,
+        ]);
         return $encoderService;
     }
 }

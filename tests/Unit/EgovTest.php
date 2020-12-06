@@ -3,9 +3,12 @@
 namespace ZnKaz\Egov\Tests\Unit;
 
 use Illuminate\Support\Collection;
+use ZnCore\Base\Encoders\XmlEncoder;
+use ZnCore\Base\Enums\RegexpPatternEnum;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
 use ZnCore\Base\Encoders\ZipEncoder;
+use ZnKaz\Egov\Qr\Factories\EncoderServiceFactory;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
@@ -25,9 +28,7 @@ class EgovTest extends BaseTest
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><BarcodeElement xmlns="http://barcodes.pdf.shep.nitec.kz/"><creationDate>2020-11-24T12:41:36.907+06:00</creationDate><elementData>r8qsK16p2tVCXZfBavyy9lPJogxNgw7d+513D9L3NXx/4X3lfeLdSxKXm8mMMVrKfQYSX3t/8L5EEi/Xk6Khqn3Nl/kUJD6H7y+xJSy5sp1krZHJOykqEU9skejfJhnDeBcbPvAVlGu3glB6TT+vba8rsMbI6eLoX/V4jeAVjyqkDwqdt5RUsg5jTFAXY+zQNq4ZYxSxKxZrSlcbyFuGCc1kKhoMP9vYNo3+zoYzGmsbRCq5OE2SpuN0IkJGksTyfAXbHmvXnOvLvavBryJFOyJ0raxrlZGlwC8Y+tCb4z7k3le8bhvrljv7muLUjMGwrwnmngXDwF+yy3vVUrkPc4zXbGVkDB0gl5T3CVQ66qxj6GCYN4smmP8atff89vuo/R7jvoSGQH3zfoBMbFNhepuKh7bJSHSb2o4liVWTyaKlyL5x3E7B63sO+vsG9OlrJI5uBOa3trzTABTtCZ4Gx1jI+x4wPkLgAlD8x6B9AjhvgYWvQP8RngZHWxSsPw0GqOgNjD8YiN0IvIvL+x5Fk1QITjoWjlORKE2+Bx2zxJusGnrXqRvD1OV0OQsAUJSQ1bF0tpwPl/LJkqZO8F3GGg1S0EFoyuHx9RRP+mc4ixAtTcShXNakfbesphuQsm/QSAOlZ6+ONfh3voD1DA3gI/wF+JD5py/l8Jj7Ho1gNH7ndwLv/vOjB4EQiZjkNiQlSFJByEIMZf49yNDvwchtZO0YcdMtMHYCwPGPJ5BQsLucvCCBSHWhTiVwXa+g9yNJm2oKjOKBjxDNb8EpwHw/R+yx5fMgHsrfgb0YEX+Zo79fKbf5XR87nQj54OlYkKT/ffB0/FKdCm2H6AV4BDhJXG0T4pp2In4ilb4=</elementData><elementNumber>2</elementNumber><elementsAmount>5</elementsAmount><FavorID>10100464053940</FavorID></BarcodeElement>',
         ];
 
-        $wrapper = new XmlWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = $this->createEncoderService($wrapper, ['zip']);
+        $encoderService = EncoderServiceFactory::createServiceForEgov();
         $decoded = $encoderService->decode(new Collection($encoded));
 
         $expected = file_get_contents(__DIR__ . '/../data/xml/egovExample.xml');
@@ -37,27 +38,30 @@ class EgovTest extends BaseTest
     public function testXmlBase64Zip()
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
-        $wrapper = new XmlWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = $this->createEncoderService($wrapper, ['zip']);
+        $encoderService = EncoderServiceFactory::createServiceForEgov();
 
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
 
+        $xmlEncoder = new XmlEncoder();
+        foreach ($encodedCollection as $i => $item) {
+            $array = $xmlEncoder->decode($item)['BarcodeElement'];
+            $this->assertArraySubset([
+                "@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
+                "elementsAmount" => "5",
+            ], $array);
+            $this->assertDateTimeString($array['creationDate']);
+            $this->assertEquals($i + 1, $array['elementNumber']);
+            $this->assertRegExp('/^\d{14}$/', $array['FavorID']);
+            $this->assertRegExp('/^' . RegexpPatternEnum::BASE_64 . '$/', $array['elementData']);
+            $b64Decoded = base64_decode($array['elementData']);
+            $this->assertNotEmpty($b64Decoded);
+            if($array['elementNumber'] == 1) {
+                $this->assertZipContent($b64Decoded);
+            }
+        }
+        $decoded = $encoderService->decode($encodedCollection);
         $this->assertEquals(5, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
-        $this->assertXmlString($first);
-    }
-
-    protected function createEncoderService(WrapperInterface $wrapper, array $resultEncoders = []): EncoderService
-    {
-        $encoderService = new EncoderService($wrapper, $resultEncoders);
-        $encoderService->setWrappers([
-            XmlWrapper::class,
-            JsonWrapper::class,
-        ]);
-        return $encoderService;
     }
 }
