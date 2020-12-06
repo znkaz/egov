@@ -91,7 +91,7 @@ class EgovTest extends BaseTest
         $this->assertEquals(1, $encodedCollection->count());
         $this->assertJson($first);
         $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
-        $this->assertDateTimeString($result['creationDate']);
+        $this->assertDateTimeString($result['createdAt']);
         $this->assertArraySubset([
             "id" => 1,
             "count" => 1,
@@ -124,7 +124,7 @@ class EgovTest extends BaseTest
             "enc" => "base64",
 //            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
-        $this->assertDateTimeString($result['creationDate']);
+        $this->assertDateTimeString($result['createdAt']);
     }
 
     public function testJsonHex()
@@ -150,7 +150,7 @@ class EgovTest extends BaseTest
             "enc" => "hex",
 //            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
-        $this->assertDateTimeString($result['creationDate']);
+        $this->assertDateTimeString($result['createdAt']);
     }
 
     public function testJsonBase64AndZip()
@@ -176,7 +176,7 @@ class EgovTest extends BaseTest
             "enc" => "base64",
 //            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
-        $this->assertDateTimeString($result['creationDate']);
+        $this->assertDateTimeString($result['createdAt']);
         $zipEncoder = new ZipEncoder();
         $this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
     }
@@ -205,7 +205,7 @@ class EgovTest extends BaseTest
             "enc" => "base64",
 //            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
-        $this->assertDateTimeString($result['creationDate']);
+        $this->assertDateTimeString($result['createdAt']);
     }
 
     private function createService($wrapper): EncoderService

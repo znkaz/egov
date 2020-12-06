@@ -6,20 +6,8 @@ use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use DateTime;
 
-class JsonWrapper implements WrapperInterface
+class JsonWrapper extends BaseWrapper implements WrapperInterface
 {
-
-    private $encoders = [];
-
-    public function getEncoders(): array
-    {
-        return $this->encoders;
-    }
-
-    public function setEncoders(array $encoders): void
-    {
-        $this->encoders = $encoders;
-    }
 
     public function isMatch(string $encodedData): bool
     {
@@ -35,24 +23,24 @@ class JsonWrapper implements WrapperInterface
         if($entity->getEntityEncoders()) {
             $barCode['enc'] = implode(',', $entity->getEntityEncoders());
         }
-        $barCode['creationDate'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
+        $barCode['createdAt'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
         $jsonContent = json_encode($barCode);
         return $jsonContent;
     }
 
     public function decode(string $encodedData): BarCodeEntity
     {
-        $decoded = json_decode($encodedData, JSON_OBJECT_AS_ARRAY);
+        $barCode = json_decode($encodedData, JSON_OBJECT_AS_ARRAY);
         $entity = new BarCodeEntity();
-        $entity->setId($decoded['id']);
-        $entity->setCount($decoded['count']);
-        $entity->setData($decoded['data']);
-        if(isset($decoded['enc'])) {
-            $entity->setEntityEncoders(explode(',', $decoded['enc']));
+        $entity->setId($barCode['id']);
+        $entity->setCount($barCode['count']);
+        $entity->setData($barCode['data']);
+        if(isset($barCode['enc'])) {
+            $entity->setEntityEncoders(explode(',', $barCode['enc']));
         } else {
             $entity->setEntityEncoders([]);
         }
-        $entity->setCreatedAt(new DateTime($decoded['creationDate']));
+        $entity->setCreatedAt(new DateTime($barCode['createdAt']));
         return $entity;
     }
 }

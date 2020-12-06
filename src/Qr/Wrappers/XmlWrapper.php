@@ -7,21 +7,8 @@ use ZnCore\Base\Encoders\XmlEncoder;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use DateTime;
 
-class XmlWrapper implements WrapperInterface
+class XmlWrapper extends BaseWrapper implements WrapperInterface
 {
-
-    private $favorId;
-    private $encoders = [];
-
-    public function getEncoders(): array
-    {
-        return $this->encoders;
-    }
-
-    public function setEncoders(array $encoders): void
-    {
-        $this->encoders = $encoders;
-    }
 
     public function isMatch(string $encodedData): bool
     {
@@ -30,17 +17,15 @@ class XmlWrapper implements WrapperInterface
 
     public function encode(BarCodeEntity $entity): string
     {
-        $barCode = [
-            //"@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
-        ];
-        $barCode['creationDate'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
-        $barCode['elementData'] = $entity->getData();
-        $barCode['elementNumber'] = $entity->getId();
-        $barCode['elementsAmount'] = $entity->getCount();
+        $barCode = [];
+        $barCode['id'] = $entity->getId();
+        $barCode['count'] = $entity->getCount();
+        $barCode['data'] = $entity->getData();
+        $barCode['createdAt'] = $entity->getCreatedAt()->format(DateTime::RFC3339_EXTENDED);
+
         $xmlEncoder = new XmlEncoder();
         $encoded = $xmlEncoder->encode(['BarCode' => $barCode]);
-        $encoded = trim($encoded);
-        $encoded = preg_replace('/(\>\s+\<)/i', '><', $encoded);
+        $encoded = $this->cleanXml($encoded);
         return $encoded;
     }
 
@@ -48,11 +33,19 @@ class XmlWrapper implements WrapperInterface
     {
         $xmlEncoder = new XmlEncoder();
         $decoded = $xmlEncoder->decode($encodedData);
+        $barCode = $decoded['BarCode'];
         $entity = new BarCodeEntity();
-        $entity->setId($decoded['BarCode']['elementNumber']);
-        $entity->setCount($decoded['BarCode']['elementsAmount']);
-        $entity->setData($decoded['BarCode']['elementData']);
-        $entity->setCreatedAt(new DateTime($decoded['BarCode']['creationDate']));
+        $entity->setId($barCode['id']);
+        $entity->setCount($barCode['count']);
+        $entity->setData($barCode['data']);
+        $entity->setCreatedAt(new DateTime($barCode['createdAt']));
         return $entity;
+    }
+
+    protected function cleanXml(string $xml): string
+    {
+        $xml = trim($xml);
+        $xml = preg_replace('/(\>\s+\<)/i', '><', $xml);
+        return $xml;
     }
 }
