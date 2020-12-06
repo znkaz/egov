@@ -9,7 +9,7 @@ use ZnCore\Base\Encoders\ZipEncoder;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
-use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
+use ZnKaz\Egov\Wrappers\XmlWrapper;
 use ZnTool\Test\Base\BaseTest;
 
 class EgovTest extends BaseTest
@@ -28,6 +28,9 @@ class EgovTest extends BaseTest
         $wrapper = new XmlWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService->setWrappers([
+            XmlWrapper::class
+        ]);
         $decoded = $encoderService->decode(new Collection($encoded));
 
         $expected = file_get_contents(__DIR__ . '/../data/xml/egovExample.xml');
@@ -40,6 +43,9 @@ class EgovTest extends BaseTest
         $wrapper = new XmlWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService->setWrappers([
+            XmlWrapper::class
+        ]);
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -56,6 +62,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -71,6 +80,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
 //        $wrapper->setEncoders();
         $encoderService = new EncoderService($wrapper);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -94,6 +106,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -117,6 +132,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['hex']);
         $encoderService = new EncoderService($wrapper);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -140,6 +158,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);
@@ -165,6 +186,9 @@ class EgovTest extends BaseTest
         $wrapper = new JsonWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['gz']);
+        $encoderService->setWrappers([
+            JsonWrapper::class
+        ]);
         $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
         $encodedCollection = $encoderService->encode($data);
         $decoded = $encoderService->decode($encodedCollection);

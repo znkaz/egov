@@ -49,5 +49,4 @@ class FileEntity
     {
         $this->content = $content;
     }
-
 }

@@ -36,12 +36,12 @@ class BarCodeEntity
         $this->count = $count;
     }
 
-    public function getData()
+    public function getData(): string
     {
         return $this->data;
     }
 
-    public function setData($data): void
+    public function setData(string $data): void
     {
         $this->data = $data;
     }

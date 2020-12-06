@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use ZnKaz\Egov\Qr\Factories\EncoderServiceFactory;
 use ZnKaz\Egov\Qr\Services\EncoderService;
 use ZnKaz\Egov\Qr\Services\QrService;
-use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
+use ZnKaz\Egov\Wrappers\XmlWrapper;
 
 class QrFacade
 {
@@ -16,6 +16,9 @@ class QrFacade
         $wrapper = new XmlWrapper();
         $wrapper->setEncoders(['base64']);
         $encoderService = new EncoderService($wrapper, ['zip'], $maxQrSize);
+        $encoderService->setWrappers([
+            XmlWrapper::class
+        ]);
 //        return $encoderService;
 //        $encoderService = EncoderServiceFactory::createServiceForEgov();
         $encoded = $encoderService->encode($content);

@@ -36,8 +36,8 @@ class EncoderService
     private $classEncoder;
     private $defaultEntityWrapper;
     private $wrappers = [
-        JsonWrapper::class,
-        XmlWrapper::class,
+//        JsonWrapper::class,
+//        XmlWrapper::class,
     ];
     private $resultEncoders = [];
     private $maxQrSize;
@@ -60,9 +60,14 @@ class EncoderService
         $this->maxQrSize = $maxQrSize;
     }
 
-    private function calcEncodedLen()
+    public function setWrappers(array $wrappers): void
     {
+        $this->wrappers = $wrappers;
+    }
 
+    public function getWrappers(): array
+    {
+        return $this->wrappers;
     }
 
     private function getBarCodeSize(): int
@@ -100,7 +105,7 @@ class EncoderService
 
     public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
     {
-        if(empty($data)) {
+        if (empty($data)) {
             throw new \InvalidArgumentException('Empty data for encode!');
         }
         $entityWrapper = /*$entityWrapper ?:*/
