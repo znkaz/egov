@@ -2,6 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Wrappers;
 
+use ZnCore\Base\Helpers\StringHelper;
 use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use DateTime;
@@ -9,6 +10,7 @@ use DateTime;
 class XmlWrapper implements WrapperInterface
 {
 
+    private $favorId;
     private $encoders = [
         'base64'
     ];
@@ -38,12 +40,19 @@ class XmlWrapper implements WrapperInterface
         $barCode['elementData'] = $entity->getData();
         $barCode['elementNumber'] = $entity->getId();
         $barCode['elementsAmount'] = $entity->getCount();
-        $barCode['FavorID'] = 10100464053940;
+        $barCode['FavorID'] = $this->getFavorId();
         $xmlEncoder = new XmlEncoder();
         $encoded = $xmlEncoder->encode(['BarcodeElement' => $barCode]);
         $encoded = trim($encoded);
         $encoded = preg_replace('/(\>\s+\<)/i', '><', $encoded);
         return $encoded;
+    }
+
+    private function getFavorId(): int {
+        if( ! isset($this->favorId)) {
+            $this->favorId = StringHelper::getMicroTime();
+        }
+        return $this->favorId;
     }
 
     public function decode(string $encodedData): BarCodeEntity

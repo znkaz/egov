@@ -79,12 +79,13 @@ class EgovTest extends BaseTest
         $this->assertEquals(1, $encodedCollection->count());
         $this->assertJson($first);
         $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
+        $this->assertDateTimeString($result['creationDate']);
         $this->assertArraySubset([
             "id" => 1,
             "count" => 1,
             "data" => "qwertyuiopasdfghjklzxcvbnm1234567890",
 //            "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
+            //"creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
     }
 
@@ -106,8 +107,9 @@ class EgovTest extends BaseTest
             "count" => 1,
             "data" => "cXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0xMjM0NTY3ODkw",
             "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
+//            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
+        $this->assertDateTimeString($result['creationDate']);
     }
 
     public function testJsonHex()
@@ -128,8 +130,9 @@ class EgovTest extends BaseTest
             "count" => 1,
             "data" => "71776572747975696f706173646667686a6b6c7a786376626e6d31323334353637383930",
             "enc" => "hex",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
+//            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
+        $this->assertDateTimeString($result['creationDate']);
     }
 
     public function testJsonBase64AndZip()
@@ -150,8 +153,9 @@ class EgovTest extends BaseTest
             "id" => 1,
             "count" => 1,
             "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
+//            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
+        $this->assertDateTimeString($result['creationDate']);
         $zipEncoder = new ZipEncoder();
         $this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
     }
@@ -175,13 +179,19 @@ class EgovTest extends BaseTest
             "count" => 1,
             "data" => 'H4sIAAAAAAACAyssTy0qqSzNzC9ILE5JS8/Iys6pqkguS8rLNTQyNjE1M7ewNAAAByoXGiQAAAA=',
             "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
+//            "creationDate" => "2020-11-17T20:55:33.671+06:00"
         ], $result);
+        $this->assertDateTimeString($result['creationDate']);
     }
 
     private function createService($wrapper): EncoderService
     {
         return new EncoderService($wrapper, ['zip']);
+    }
+
+    public function assertDateTimeString(string $actual)
+    {
+        $this->assertRegExp('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2}$/', $actual);
     }
 
     public function assertXmlString(string $actual)

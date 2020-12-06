@@ -124,9 +124,7 @@ class EncoderService
             $barCodeEntity->setId($index + 1);
             $barCodeEntity->setData($encodedItem);
             $barCodeEntity->setCount(count($encodedParts));
-
-            $barCodeEntity->setCreatedAt(new DateTime('2020-11-17T20:55:33.671+06:00'));
-            //                                     "2020-12-06T04:23:31.197+00:00"
+            $barCodeEntity->setCreatedAt(new DateTime());
             $barCodeEntity->setEntityEncoders($entityWrapper->getEncoders());
             $collection->add($entityWrapper->encode($barCodeEntity));
         }
