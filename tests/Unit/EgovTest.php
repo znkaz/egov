@@ -43,25 +43,30 @@ class EgovTest extends BaseTest
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
 
-        $xmlEncoder = new XmlEncoder();
         foreach ($encodedCollection as $i => $item) {
-            $array = $xmlEncoder->decode($item)['BarcodeElement'];
-            $this->assertArraySubset([
-                "@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
-                "elementsAmount" => "5",
-            ], $array);
-            $this->assertDateTimeString($array['creationDate']);
-            $this->assertEquals($i + 1, $array['elementNumber']);
-            $this->assertRegExp('/^\d{14}$/', $array['FavorID']);
-            $this->assertRegExp('/^' . RegexpPatternEnum::BASE_64 . '$/', $array['elementData']);
-            $b64Decoded = base64_decode($array['elementData']);
-            $this->assertNotEmpty($b64Decoded);
-            if($array['elementNumber'] == 1) {
-                $this->assertZipContent($b64Decoded);
-            }
+            $this->assertBarCode($item, $i);
         }
         $decoded = $encoderService->decode($encodedCollection);
         $this->assertEquals(5, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
+    }
+
+    private function assertBarCode(string $item, int $i)
+    {
+        $xmlEncoder = new XmlEncoder();
+        $array = $xmlEncoder->decode($item)['BarcodeElement'];
+        $this->assertArraySubset([
+            "@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
+            "elementsAmount" => "5",
+        ], $array);
+        $this->assertDateTimeString($array['creationDate']);
+        $this->assertEquals($i + 1, $array['elementNumber']);
+        $this->assertRegExp('/^\d{14}$/', $array['FavorID']);
+        $this->assertRegExp('/^' . RegexpPatternEnum::BASE_64 . '$/', $array['elementData']);
+        $b64Decoded = base64_decode($array['elementData']);
+        $this->assertNotEmpty($b64Decoded);
+        if ($array['elementNumber'] == 1) {
+            $this->assertZipContent($b64Decoded);
+        }
     }
 }

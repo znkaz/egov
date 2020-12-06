@@ -2,8 +2,6 @@
 
 namespace ZnKaz\Egov\Tests\Unit;
 
-//use ZnTool\Test\Base\BaseTest;
-
 abstract class BaseTest extends \ZnTool\Test\Base\BaseTest
 {
 
