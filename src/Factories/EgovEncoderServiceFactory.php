@@ -2,9 +2,9 @@
 
 namespace ZnKaz\Egov\Factories;
 
-use ZnKaz\Egov\Qr\Factories\ClassEncoderFactory;
-use ZnKaz\Egov\Qr\Factories\EncoderServiceFactory;
-use ZnKaz\Egov\Qr\Services\EncoderService;
+use ZnLib\QrBox\Factories\ClassEncoderFactory;
+use ZnLib\QrBox\Factories\EncoderServiceFactory;
+use ZnLib\QrBox\Services\EncoderService;
 use ZnKaz\Egov\Wrappers\XmlWrapper;
 
 class EgovEncoderServiceFactory

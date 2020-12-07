@@ -4,8 +4,8 @@ namespace ZnKaz\Egov\Facades;
 
 use Illuminate\Support\Collection;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
-use ZnKaz\Egov\Qr\Entities\FileEntity;
-use ZnKaz\Egov\Qr\Services\QrService;
+use ZnLib\QrBox\Entities\FileEntity;
+use ZnLib\QrBox\Services\QrService;
 
 class QrFacade
 {

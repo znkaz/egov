@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use ZnCore\Base\Encoders\XmlEncoder;
 use ZnCore\Base\Enums\RegexpPatternEnum;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
+use ZnLib\QrBox\Tests\Unit\BaseTest;
 
 class EgovTest extends BaseTest
 {

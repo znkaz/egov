@@ -4,11 +4,11 @@ namespace ZnKaz\Egov\Wrappers;
 
 use ZnCore\Base\Helpers\StringHelper;
 use ZnCore\Base\Encoders\XmlEncoder;
-use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
+use ZnLib\QrBox\Entities\BarCodeEntity;
 use DateTime;
-use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
+use ZnLib\QrBox\Wrappers\WrapperInterface;
 
-class XmlWrapper extends \ZnKaz\Egov\Qr\Wrappers\XmlWrapper implements WrapperInterface
+class XmlWrapper extends \ZnLib\QrBox\Wrappers\XmlWrapper implements WrapperInterface
 {
 
     protected static $favorId;
