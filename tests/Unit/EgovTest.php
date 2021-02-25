@@ -1,16 +1,12 @@
 <?php
 
-namespace Tests\Unit;
+namespace ZnKaz\Egov\Tests\Unit;
 
 use Illuminate\Support\Collection;
-use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
-use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
-use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
-use ZnKaz\Egov\Qr\Libs\ClassEncoder;
-use ZnKaz\Egov\Qr\Services\EncoderService;
-use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
-use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
-use ZnTool\Test\Base\BaseTest;
+use ZnCore\Base\Encoders\XmlEncoder;
+use ZnCore\Base\Enums\RegexpPatternEnum;
+use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
+use ZnLib\QrBox\Tests\Unit\BaseTest;
 
 class EgovTest extends BaseTest
 {
@@ -25,9 +21,7 @@ class EgovTest extends BaseTest
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><BarcodeElement xmlns="http://barcodes.pdf.shep.nitec.kz/"><creationDate>2020-11-24T12:41:36.907+06:00</creationDate><elementData>r8qsK16p2tVCXZfBavyy9lPJogxNgw7d+513D9L3NXx/4X3lfeLdSxKXm8mMMVrKfQYSX3t/8L5EEi/Xk6Khqn3Nl/kUJD6H7y+xJSy5sp1krZHJOykqEU9skejfJhnDeBcbPvAVlGu3glB6TT+vba8rsMbI6eLoX/V4jeAVjyqkDwqdt5RUsg5jTFAXY+zQNq4ZYxSxKxZrSlcbyFuGCc1kKhoMP9vYNo3+zoYzGmsbRCq5OE2SpuN0IkJGksTyfAXbHmvXnOvLvavBryJFOyJ0raxrlZGlwC8Y+tCb4z7k3le8bhvrljv7muLUjMGwrwnmngXDwF+yy3vVUrkPc4zXbGVkDB0gl5T3CVQ66qxj6GCYN4smmP8atff89vuo/R7jvoSGQH3zfoBMbFNhepuKh7bJSHSb2o4liVWTyaKlyL5x3E7B63sO+vsG9OlrJI5uBOa3trzTABTtCZ4Gx1jI+x4wPkLgAlD8x6B9AjhvgYWvQP8RngZHWxSsPw0GqOgNjD8YiN0IvIvL+x5Fk1QITjoWjlORKE2+Bx2zxJusGnrXqRvD1OV0OQsAUJSQ1bF0tpwPl/LJkqZO8F3GGg1S0EFoyuHx9RRP+mc4ixAtTcShXNakfbesphuQsm/QSAOlZ6+ONfh3voD1DA3gI/wF+JD5py/l8Jj7Ho1gNH7ndwLv/vOjB4EQiZjkNiQlSFJByEIMZf49yNDvwchtZO0YcdMtMHYCwPGPJ5BQsLucvCCBSHWhTiVwXa+g9yNJm2oKjOKBjxDNb8EpwHw/R+yx5fMgHsrfgb0YEX+Zo79fKbf5XR87nQj54OlYkKT/ffB0/FKdCm2H6AV4BDhJXG0T4pp2In4ilb4=</elementData><elementNumber>2</elementNumber><elementsAmount>5</elementsAmount><FavorID>10100464053940</FavorID></BarcodeElement>',
         ];
 
-        $wrapper = new XmlWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService = EgovEncoderServiceFactory::createService();
         $decoded = $encoderService->decode(new Collection($encoded));
 
         $expected = file_get_contents(__DIR__ . '/../data/xml/egovExample.xml');
@@ -37,160 +31,35 @@ class EgovTest extends BaseTest
     public function testXmlBase64Zip()
     {
         $xmlFile = __DIR__ . '/../data/xml/example.xml';
-        $wrapper = new XmlWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['zip']);
+        $encoderService = EgovEncoderServiceFactory::createService();
+
         $data = file_get_contents($xmlFile);
         $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
 
+        foreach ($encodedCollection as $i => $item) {
+            $this->assertBarCode($item, $i);
+        }
+        $decoded = $encoderService->decode($encodedCollection);
         $this->assertEquals(5, $encodedCollection->count());
         $this->assertEquals($data, $decoded);
-        $this->assertXmlString($first);
     }
 
-    public function testJsonBase64Zip()
+    private function assertBarCode(string $item, int $i)
     {
-        $xmlFile = __DIR__ . '/../data/xml/example.xml';
-        $wrapper = new JsonWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['zip']);
-        $data = file_get_contents($xmlFile);
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(5, $encodedCollection->count());
-        $this->assertEquals($data, $decoded);
-        $this->assertJson($first);
-    }
-
-    public function testJsonDefault()
-    {
-        $wrapper = new JsonWrapper();
-//        $wrapper->setEncoders();
-        $encoderService = new EncoderService($wrapper);
-        $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(1, $encodedCollection->count());
-        $this->assertJson($first);
-        $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
+        $xmlEncoder = new XmlEncoder();
+        $array = $xmlEncoder->decode($item)['BarcodeElement'];
         $this->assertArraySubset([
-            "id" => 1,
-            "count" => 1,
-            "data" => "qwertyuiopasdfghjklzxcvbnm1234567890",
-//            "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
-        ], $result);
-    }
-
-    public function testJsonBase64()
-    {
-        $wrapper = new JsonWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper);
-        $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(1, $encodedCollection->count());
-        $this->assertJson($first);
-        $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
-        $this->assertArraySubset([
-            "id" => 1,
-            "count" => 1,
-            "data" => "cXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0xMjM0NTY3ODkw",
-            "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
-        ], $result);
-    }
-
-    public function testJsonHex()
-    {
-        $wrapper = new JsonWrapper();
-        $wrapper->setEncoders(['hex']);
-        $encoderService = new EncoderService($wrapper);
-        $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(1, $encodedCollection->count());
-        $this->assertJson($first);
-        $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
-        $this->assertArraySubset([
-            "id" => 1,
-            "count" => 1,
-            "data" => "71776572747975696f706173646667686a6b6c7a786376626e6d31323334353637383930",
-            "enc" => "hex",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
-        ], $result);
-    }
-
-    public function testJsonBase64AndZip()
-    {
-        $wrapper = new JsonWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['zip']);
-        $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(1, $encodedCollection->count());
-        $this->assertJson($first);
-        $this->assertEquals(278, mb_strlen($first));
-        $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
-        $this->assertArraySubset([
-            "id" => 1,
-            "count" => 1,
-            "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
-        ], $result);
-        $zipEncoder = new ZipEncoder();
-        $this->assertEquals($data, $zipEncoder->decode(base64_decode($result['data'])));
-    }
-
-    public function testJsonBase64AndGZip()
-    {
-        $wrapper = new JsonWrapper();
-        $wrapper->setEncoders(['base64']);
-        $encoderService = new EncoderService($wrapper, ['gzip']);
-        $data = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-        $encodedCollection = $encoderService->encode($data);
-        $decoded = $encoderService->decode($encodedCollection);
-        $first = $encodedCollection->first();
-
-        $this->assertEquals(1, $encodedCollection->count());
-        $this->assertJson($first);
-//        $this->assertEquals(277, mb_strlen($first));
-        $result = json_decode($first, JSON_OBJECT_AS_ARRAY);
-        $this->assertArraySubset([
-            "id" => 1,
-            "count" => 1,
-            "data" => 'H4sIAAAAAAACAyssTy0qqSzNzC9ILE5JS8/Iys6pqkguS8rLNTQyNjE1M7ewNAAAByoXGiQAAAA=',
-            "enc" => "base64",
-            "creationDate" => "2020-11-17T20:55:33.671+06:00"
-        ], $result);
-    }
-
-    private function createService($wrapper): EncoderService
-    {
-        return new EncoderService($wrapper, ['zip']);
-    }
-
-    public function assertXmlString(string $actual)
-    {
-        $this->assertRegExp('/^<\?xml.+>[\s\S]+<\/.+>\s*$/', $actual);
-    }
-
-    public function assertNotXmlString(string $actual)
-    {
-        $this->assertNotRegExp('/^<\?xml.+>[\s\S]+<\/.+>$/', $actual);
+            "@xmlns" => "http://barcodes.pdf.shep.nitec.kz/",
+            "elementsAmount" => "5",
+        ], $array);
+        $this->assertDateTimeString($array['creationDate']);
+        $this->assertEquals($i + 1, $array['elementNumber']);
+        $this->assertRegExp('/^\d{14}$/', $array['FavorID']);
+        //$this->assertRegExp('/^' . RegexpPatternEnum::BASE_64 . '$/', $array['elementData']);
+        $b64Decoded = base64_decode($array['elementData']);
+        $this->assertNotEmpty($b64Decoded);
+        if ($array['elementNumber'] == 1) {
+            $this->assertZipContent($b64Decoded);
+        }
     }
 }

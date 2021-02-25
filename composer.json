@@ -10,8 +10,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "bacon/bacon-qr-code": "2.0.3",
     "symfony/serializer": "^4.4|^5.0",
+    "znlib/qr-box": "dev-develop",
     "zncore/domain": "v0.0.*"
   },
   "autoload": {

@@ -10,7 +10,7 @@
 На входе подписанный XML-документ, в результате - коллекция сущностей с изображениями QR-кодов.
 
 Формат картинки можно задать в 5-м параметре.
-Поддерживаемые форматы изображений - \ZnKaz\Egov\Qr\Enums\ImageExtensionEnum.
+Поддерживаемые форматы изображений - \ZnLib\QrBox\Enums\ImageExtensionEnum.
 
 Пример генерации:
 
@@ -21,6 +21,6 @@ $inputXml = '<?xml version="1.0" encoding="UTF-8"?>
 <ns2:response xmlns:ns2="http://itrc.kz/gbdrn/egov/2008" xmlns="http://itrc.kz/gbdrn/egov/2008/commontypes" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#">
 ...
 </ns2:response>';
-$qrCollection = QrFacade::generateQrCode($inputXml, 5, 800);
+$qrCollection = QrFacade::generateQrCode($inputXml);
 print_r($qrCollection);
 ```
