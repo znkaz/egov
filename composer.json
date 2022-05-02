@@ -11,8 +11,8 @@
   "minimum-stability": "dev",
   "require": {
     "symfony/serializer": "^4.4|^5.0",
-    "znlib/qr-box": "v0.0.*",
-    "zncore/domain": "v0.0.*"
+    "znlib/qr-box": "0.x-dev",
+    "zncore/domain": "0.x-dev"
   },
   "autoload": {
     "psr-4": {
