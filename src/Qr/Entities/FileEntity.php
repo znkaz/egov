@@ -2,6 +2,10 @@
 
 namespace ZnKaz\Egov\Qr\Entities;
 
+use ZnCore\Base\Helpers\DeprecateHelper;
+
+DeprecateHelper::hardThrow();
+
 class FileEntity
 {
 
