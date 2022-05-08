@@ -12,7 +12,7 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Collection;
 use ZnCore\Base\Helpers\EnumHelper;
-use ZnCore\Base\Helpers\MimeTypeHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\MimeTypeHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 //use ZnKaz\Egov\Qr\Entities\FileEntity;
 use ZnKaz\Egov\Qr\Enums\ImageExtensionEnum;
