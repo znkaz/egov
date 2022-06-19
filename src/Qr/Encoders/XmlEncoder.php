@@ -2,11 +2,12 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Libs\Text\Helpers\StringHelper;
+
 use Symfony\Component\Serializer\Encoder\XmlEncoder as SymfonyXmlEncoder;
 use Exception;
 use InvalidArgumentException;
 use DomainException;
+use ZnCore\Base\Libs\Text\Helpers\TextHelper;
 
 class XmlEncoder implements EncoderInterface
 {
@@ -49,7 +50,7 @@ class XmlEncoder implements EncoderInterface
         $encoded = str_replace('<response>', '', $encoded);
         $encoded = str_replace('</response>', '', $encoded);
         $encoded = str_replace("\n  ", "\n", $encoded);
-        $encoded = StringHelper::removeDoubleSpace($encoded, '\n', "\n");
+        $encoded = TextHelper::removeDoubleSpace($encoded, '\n', "\n");
         return $encoded;
     }
 
