@@ -2,10 +2,10 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Libs\Text\Helpers\StringHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use Exception;
+use Symfony\Component\Uid\Uuid;
 use ZipArchive;
+use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 
 class ZipEncoder implements EncoderInterface
 {
@@ -52,7 +52,7 @@ class ZipEncoder implements EncoderInterface
 
     private static function getTmpDirectory(): string
     {
-        $tmpDir = __DIR__ . '/../../../../../../var/tmp/qrZip/' . StringHelper::genUuid();
+        $tmpDir = __DIR__ . '/../../../../../../var/tmp/qrZip/' . Uuid::v4()->toRfc4122();
         FileHelper::createDirectory($tmpDir);
         return realpath($tmpDir);
     }

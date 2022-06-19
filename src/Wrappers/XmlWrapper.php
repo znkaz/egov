@@ -44,8 +44,17 @@ class XmlWrapper extends \ZnLib\QrBox\Wrappers\XmlWrapper implements WrapperInte
 
     private static function getFavorId(): int {
         if( ! isset(self::$favorId)) {
-            self::$favorId = StringHelper::getMicroTime();
+            self::$favorId = self::getMicroTime();
         }
         return self::$favorId;
     }
+
+
+    private static function getMicroTime(): int
+    {
+        $microtimeFloat = microtime(true) * 10000;
+        $microtimeInt = (int)round($microtimeFloat);
+        return $microtimeInt;
+    }
+
 }
