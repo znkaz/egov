@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Libs\Text\Helpers\StringHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use Exception;
 use ZipArchive;

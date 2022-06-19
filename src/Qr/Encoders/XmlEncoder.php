@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Encoders;
 
-use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Libs\Text\Helpers\StringHelper;
 use Symfony\Component\Serializer\Encoder\XmlEncoder as SymfonyXmlEncoder;
 use Exception;
 use InvalidArgumentException;

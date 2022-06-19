@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Wrappers;
 
-use ZnCore\Base\Helpers\StringHelper;
+use ZnCore\Base\Libs\Text\Helpers\StringHelper;
 use ZnCore\Base\Encoders\XmlEncoder;
 use ZnLib\QrBox\Entities\BarCodeEntity;
 use DateTime;
