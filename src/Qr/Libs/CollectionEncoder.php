@@ -3,7 +3,7 @@
 namespace ZnKaz\Egov\Qr\Libs;
 
 use Illuminate\Support\Collection;
-use ZnCore\Domain\Helpers\EntityHelper;
+use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
 use ZnCore\Base\Helpers\InstanceHelper;
 use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
