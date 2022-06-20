@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 
 use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
 use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\Entity\Helpers\CollectionHelper;
 use ZnCore\Base\Libs\Entity\Helpers\EntityHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
 use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
@@ -165,7 +166,7 @@ class EncoderService
             $barCodeEntity = $wrapper->decode($item);
             $collection->add($barCodeEntity);
         }
-        $arr = EntityHelper::indexingCollection($collection, 'id');
+        $arr = CollectionHelper::indexing($collection, 'id');
         ksort($arr);
         return new Collection($arr);
     }
