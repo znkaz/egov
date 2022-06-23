@@ -3,7 +3,6 @@
 namespace ZnKaz\Egov\Qr\Services;
 
 use BaconQrCode\Renderer\Image\EpsImageBackEnd;
-use BaconQrCode\Renderer\Image\ImageBackEndInterface;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
@@ -13,10 +12,10 @@ use BaconQrCode\Writer;
 use Illuminate\Support\Collection;
 use ZnCore\Base\Libs\Enum\Helpers\EnumHelper;
 use ZnCore\Base\Libs\FileSystem\Helpers\MimeTypeHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
-//use ZnKaz\Egov\Qr\Entities\FileEntity;
 use ZnKaz\Egov\Qr\Enums\ImageExtensionEnum;
 use ZnLib\QrBox\Entities\FileEntity;
+
+//use ZnKaz\Egov\Qr\Entities\FileEntity;
 
 class QrService
 {

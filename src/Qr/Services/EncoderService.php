@@ -2,36 +2,23 @@
 
 namespace ZnKaz\Egov\Qr\Services;
 
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use Exception;
 use Illuminate\Support\Collection;
-
-use ZnCore\Base\Legacy\Yii\Helpers\ArrayHelper;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
 use ZnCore\Domain\Entity\Helpers\CollectionHelper;
-use ZnCore\Domain\Entity\Helpers\EntityHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\CollectionEncoder;
-use ZnCrypt\Pki\X509\Domain\Helpers\QrDecoderHelper;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
-use ZnKaz\Egov\Qr\Encoders\GZipDeflateEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipEncoder;
 use ZnKaz\Egov\Qr\Encoders\HexEncoder;
-use ZnKaz\Egov\Qr\Encoders\PclZipEncoder;
-use ZnLib\Egov\Helpers\XmlHelper;
 use ZnKaz\Egov\Qr\Encoders\ImplodeEncoder;
 use ZnKaz\Egov\Qr\Encoders\SplitEncoder;
-use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
+use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
 use ZnKaz\Egov\Qr\Entities\BarCodeEntity;
 use ZnKaz\Egov\Qr\Libs\ClassEncoder;
-use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
 use ZnKaz\Egov\Qr\Wrappers\JsonWrapper;
 use ZnKaz\Egov\Qr\Wrappers\WrapperInterface;
 use ZnKaz\Egov\Qr\Wrappers\XmlWrapper;
+use ZnLib\Egov\Helpers\XmlHelper;
 use Zxing\QrReader;
-use Exception;
 
 class EncoderService
 {
@@ -104,7 +91,7 @@ class EncoderService
 
     public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
     {
-        if(empty($data)) {
+        if (empty($data)) {
             throw new \InvalidArgumentException('Empty data for encode!');
         }
         $entityWrapper = /*$entityWrapper ?:*/

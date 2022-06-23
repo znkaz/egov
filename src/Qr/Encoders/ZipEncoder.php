@@ -5,7 +5,7 @@ namespace ZnKaz\Egov\Qr\Encoders;
 use Exception;
 use Symfony\Component\Uid\Uuid;
 use ZipArchive;
-use ZnCore\Base\Legacy\Yii\Helpers\FileHelper;
+use ZnCore\Base\Libs\FileSystem\Helpers\FileHelper;
 
 class ZipEncoder implements EncoderInterface
 {
