@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Entities;
 
-use ZnCore\Base\Libs\Develop\Helpers\DeprecateHelper;
+use ZnCore\Base\Develop\Helpers\DeprecateHelper;
 
 DeprecateHelper::hardThrow();
 
