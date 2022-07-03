@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Facades;
 
-use Illuminate\Support\Collection;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
 use ZnLib\QrBox\Entities\FileEntity;
 use ZnLib\QrBox\Services\QrService;

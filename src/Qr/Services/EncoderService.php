@@ -3,7 +3,7 @@
 namespace ZnKaz\Egov\Qr\Services;
 
 use Exception;
-use Illuminate\Support\Collection;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Domain\Entity\Helpers\CollectionHelper;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;

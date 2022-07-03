@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Libs;
 
-use Illuminate\Support\Collection;
+use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\Arr\Helpers\ArrayHelper;
 use ZnCrypt\Base\Domain\Libs\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
