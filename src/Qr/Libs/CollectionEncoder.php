@@ -25,7 +25,7 @@ class CollectionEncoder implements EncoderInterface
     public function encode($data)
     {
         //$data = EntityHelper::toArray($data);
-        $encoders = $this->encoderCollection->all();
+        $encoders = $this->encoderCollection->toArray();
         foreach ($encoders as $encoderClass) {
             /** @var EncoderInterface $encoderInstance */
             $encoderInstance = InstanceHelper::ensure($encoderClass);
@@ -36,7 +36,7 @@ class CollectionEncoder implements EncoderInterface
 
     public function decode($data)
     {
-        $encoders = $this->encoderCollection->all();
+        $encoders = $this->encoderCollection->toArray();
         $encoders = array_reverse($encoders);
         foreach ($encoders as $encoderClass) {
             /** @var EncoderInterface $encoderInstance */
