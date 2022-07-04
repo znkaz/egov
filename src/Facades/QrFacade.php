@@ -16,7 +16,7 @@ class QrFacade
      * @param int $size
      * @param int $maxQrSize
      * @param string $qrFormat
-     * @return Collection | FileEntity[]
+     * @return \ZnCore\Domain\Collection\Interfaces\Enumerable | FileEntity[]
      */
     public static function generateQrCode(string $content, int $margin = 1, int $size = 500, int $maxQrSize = 1183, string $qrFormat = 'png'): Collection
     {
