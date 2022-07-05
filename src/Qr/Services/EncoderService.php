@@ -3,6 +3,7 @@
 namespace ZnKaz\Egov\Qr\Services;
 
 use Exception;
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
 use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Domain\Entity\Helpers\CollectionHelper;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
@@ -89,7 +90,7 @@ class EncoderService
         return $rate;
     }
 
-    public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Collection
+    public function encode(string $data/*, WrapperInterface $entityWrapper = null*/): Enumerable
     {
         if (empty($data)) {
             throw new \InvalidArgumentException('Empty data for encode!');
@@ -142,10 +143,10 @@ class EncoderService
 
     /**
      * @param Collection $array
-     * @return \ZnCore\Domain\Collection\Interfaces\Enumerable | BarCodeEntity[]
+     * @return Enumerable | BarCodeEntity[]
      * @throws Exception
      */
-    private function arrayToCollection(Collection $array): Collection
+    private function arrayToCollection(Enumerable $array): Enumerable
     {
         $collection = new Collection();
         foreach ($array as $item) {

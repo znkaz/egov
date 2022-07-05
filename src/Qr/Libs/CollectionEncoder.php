@@ -2,6 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Libs;
 
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
 use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Domain\Entity\Helpers\EntityHelper;
 use ZnCore\Base\Instance\Helpers\InstanceHelper;
@@ -12,12 +13,12 @@ class CollectionEncoder implements EncoderInterface
 
     private $encoderCollection;
 
-    public function __construct(Collection $encoderCollection)
+    public function __construct(Enumerable $encoderCollection)
     {
         $this->encoderCollection = $encoderCollection;
     }
 
-    public function getEncoders(): Collection
+    public function getEncoders(): Enumerable
     {
         return $this->encoderCollection;
     }
