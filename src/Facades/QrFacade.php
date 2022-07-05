@@ -3,7 +3,6 @@
 namespace ZnKaz\Egov\Facades;
 
 use ZnCore\Domain\Collection\Interfaces\Enumerable;
-use ZnCore\Domain\Collection\Libs\Collection;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
 use ZnLib\QrBox\Entities\FileEntity;
 use ZnLib\QrBox\Services\QrService;

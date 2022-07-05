@@ -142,7 +142,7 @@ class EncoderService
     }
 
     /**
-     * @param Collection $array
+     * @param Enumerable $array
      * @return Enumerable | BarCodeEntity[]
      * @throws Exception
      */

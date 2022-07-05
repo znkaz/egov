@@ -2,11 +2,8 @@
 
 namespace ZnKaz\Egov\Qr\Libs;
 
-use ZnCore\Domain\Collection\Libs\Collection;
 use ZnCore\Base\Arr\Helpers\ArrayHelper;
-use ZnCrypt\Base\Domain\Libs\Encoders\Base64Encoder;
-use ZnKaz\Egov\Qr\Encoders\XmlEncoder;
-use ZnKaz\Egov\Qr\Encoders\ZipEncoder;
+use ZnCore\Domain\Collection\Libs\Collection;
 
 class ClassEncoder
 {

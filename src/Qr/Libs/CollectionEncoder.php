@@ -2,10 +2,8 @@
 
 namespace ZnKaz\Egov\Qr\Libs;
 
-use ZnCore\Domain\Collection\Interfaces\Enumerable;
-use ZnCore\Domain\Collection\Libs\Collection;
-use ZnCore\Domain\Entity\Helpers\EntityHelper;
 use ZnCore\Base\Instance\Helpers\InstanceHelper;
+use ZnCore\Domain\Collection\Interfaces\Enumerable;
 use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
 class CollectionEncoder implements EncoderInterface

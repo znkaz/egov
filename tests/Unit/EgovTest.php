@@ -3,8 +3,8 @@
 namespace ZnKaz\Egov\Tests\Unit;
 
 use ZnCore\Domain\Collection\Libs\Collection;
-use ZnLib\Components\Format\Encoders\XmlEncoder;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
+use ZnLib\Components\Format\Encoders\XmlEncoder;
 use ZnLib\QrBox\Tests\Unit\BaseTest;
 
 class EgovTest extends BaseTest
