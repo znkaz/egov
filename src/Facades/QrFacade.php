@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Facades;
 
-use ZnCore\Domain\Collection\Interfaces\Enumerable;
+use ZnCore\Collection\Interfaces\Enumerable;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
 use ZnLib\QrBox\Entities\FileEntity;
 use ZnLib\QrBox\Services\QrService;
@@ -16,7 +16,7 @@ class QrFacade
      * @param int $size
      * @param int $maxQrSize
      * @param string $qrFormat
-     * @return \ZnCore\Domain\Collection\Interfaces\Enumerable | FileEntity[]
+     * @return \ZnCore\Collection\Interfaces\Enumerable | FileEntity[]
      */
     public static function generateQrCode(string $content, int $margin = 1, int $size = 500, int $maxQrSize = 1183, string $qrFormat = 'png'): Enumerable
     {

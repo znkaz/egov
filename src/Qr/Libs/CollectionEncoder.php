@@ -3,7 +3,7 @@
 namespace ZnKaz\Egov\Qr\Libs;
 
 use ZnCore\Base\Instance\Helpers\InstanceHelper;
-use ZnCore\Domain\Collection\Interfaces\Enumerable;
+use ZnCore\Collection\Interfaces\Enumerable;
 use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
 class CollectionEncoder implements EncoderInterface

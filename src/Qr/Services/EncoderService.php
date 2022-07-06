@@ -3,9 +3,9 @@
 namespace ZnKaz\Egov\Qr\Services;
 
 use Exception;
-use ZnCore\Domain\Collection\Interfaces\Enumerable;
-use ZnCore\Domain\Collection\Libs\Collection;
-use ZnCore\Domain\Entity\Helpers\CollectionHelper;
+use ZnCore\Collection\Interfaces\Enumerable;
+use ZnCore\Collection\Libs\Collection;
+use ZnCore\Entity\Helpers\CollectionHelper;
 use ZnKaz\Egov\Qr\Encoders\Base64Encoder;
 use ZnKaz\Egov\Qr\Encoders\EconomicCompressionEncoder;
 use ZnKaz\Egov\Qr\Encoders\GZipEncoder;

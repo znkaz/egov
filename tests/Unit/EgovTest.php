@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Tests\Unit;
 
-use ZnCore\Domain\Collection\Libs\Collection;
+use ZnCore\Collection\Libs\Collection;
 use ZnKaz\Egov\Factories\EgovEncoderServiceFactory;
 use ZnLib\Components\Format\Encoders\XmlEncoder;
 use ZnLib\QrBox\Tests\Unit\BaseTest;

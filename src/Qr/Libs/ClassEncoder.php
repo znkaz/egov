@@ -3,7 +3,7 @@
 namespace ZnKaz\Egov\Qr\Libs;
 
 use ZnCore\Base\Arr\Helpers\ArrayHelper;
-use ZnCore\Domain\Collection\Libs\Collection;
+use ZnCore\Collection\Libs\Collection;
 
 class ClassEncoder
 {
