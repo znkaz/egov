@@ -9,7 +9,7 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\PlainTextRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use ZnCore\Base\Enum\Helpers\EnumHelper;
+use ZnCore\Enum\Helpers\EnumHelper;
 use ZnCore\FileSystem\Helpers\MimeTypeHelper;
 use ZnCore\Collection\Interfaces\Enumerable;
 use ZnCore\Collection\Libs\Collection;

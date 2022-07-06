@@ -2,7 +2,7 @@
 
 namespace ZnKaz\Egov\Qr\Libs;
 
-use ZnCore\Base\Instance\Helpers\InstanceHelper;
+use ZnCore\Instance\Helpers\InstanceHelper;
 use ZnCore\Collection\Interfaces\Enumerable;
 use ZnKaz\Egov\Qr\Encoders\EncoderInterface;
 
